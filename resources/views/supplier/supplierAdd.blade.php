@@ -5,49 +5,37 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-md-12">
-          <form method="post" action="{{ route('profile.update') }}" autocomplete="off" class="form-horizontal">
+          <form method="post" action="{{ route('supplier.store') }}" autocomplete="off" class="form-horizontal">
             @csrf
-            @method('put')
+            {{-- @method('put') --}}
 
             <div class="card ">
               <div class="card-header card-header-primary">
-                <h4 class="card-title">{{ __('Edit Profile') }}</h4>
-                <p class="card-category">{{ __('User information') }}</p>
+                <h4 class="card-title">{{ __('Tambah Supplier') }}</h4>
+                <p class="card-category">{{ __('Data Supplier') }}</p>
               </div>
               <div class="card-body ">
-                @if (session('status'))
-                  <div class="row">
-                    <div class="col-sm-12">
-                      <div class="alert alert-success">
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                          <i class="material-icons">close</i>
-                        </button>
-                        <span>{{ session('status') }}</span>
-                      </div>
-                    </div>
-                  </div>
-                @endif
                 <div class="row">
-                  <label class="col-sm-2 col-form-label">{{ __('kode') }}</label>
+                  <label class="col-sm-2 col-form-label">{{ __('Kode Supplier') }}</label>
                   <div class="col-sm-7">
-                    <div class="form-group{{ $errors->has('kode') ? ' has-danger' : '' }}">
-                      <input class="form-control{{ $errors->has('kode') ? ' is-invalid' : '' }}" kode="kode" id="input-kode" type="text" required="true" aria-required="true"/>
+                    <div class="form-group{{ $errors->has('kodeSupplier') ? ' has-danger' : '' }}">
+                      <input class="form-control{{ $errors->has('kodeSupplier') ? ' is-invalid' : '' }}" name="kodeSupplier" id="input-kode" type="text"/>
                     </div>
                   </div>
                 </div>
                 <div class="row">
-                  <label class="col-sm-2 col-form-label">{{ __('nama') }}</label>
+                  <label class="col-sm-2 col-form-label">{{ __('Nama Supplier') }}</label>
                   <div class="col-sm-7">
-                    <div class="form-group{{ $errors->has('nama') ? ' has-danger' : '' }}">
-                      <input class="form-control{{ $errors->has('nama') ? ' is-invalid' : '' }}" name="nama" id="input-nama" type="text" required />
+                    <div class="form-group{{ $errors->has('namaSupplier') ? ' has-danger' : '' }}">
+                      <input class="form-control{{ $errors->has('namaSupplier') ? ' is-invalid' : '' }}" name="namaSupplier" id="input-nama" type="text"/>
                     </div>
                   </div>
                 </div>
                 <div class="row">
-                  <label class="col-sm-2 col-form-label">{{ __('alamat') }}</label>
+                  <label class="col-sm-2 col-form-label">{{ __('Alamat') }}</label>
                   <div class="col-sm-7">
                     <div class="form-group{{ $errors->has('alamat') ? ' has-danger' : '' }}">
-                      <input class="form-control{{ $errors->has('alamat') ? ' is-invalid' : '' }}" name="alamat" id="input-alamat" type="text" required />
+                      <input class="form-control{{ $errors->has('alamat') ? ' is-invalid' : '' }}" name="alamat" id="input-alamat" type="text"/>
                     </div>
                   </div>
                 </div>
@@ -55,15 +43,15 @@
                   <label class="col-sm-2 col-form-label">{{ __('Nama Kontak') }}</label>
                   <div class="col-sm-7">
                     <div class="form-group{{ $errors->has('namaKontak') ? ' has-danger' : '' }}">
-                      <input class="form-control{{ $errors->has('namaKontak') ? ' is-invalid' : '' }}" name="namaKontak" id="input-namaKontak" type="text" required />
+                      <input class="form-control{{ $errors->has('namaKontak') ? ' is-invalid' : '' }}" name="namaKontak" id="input-namaKontak" type="text"/>
                     </div>
                   </div>
                 </div>
                 <div class="row">
                   <label class="col-sm-2 col-form-label">{{ __('No HP') }}</label>
                   <div class="col-sm-7">
-                    <div class="form-group{{ $errors->has('noHp') ? ' has-danger' : '' }}">
-                      <input class="form-control{{ $errors->has('NoHp') ? ' is-invalid' : '' }}" name="noHp" id="input-noHp" type="text" required />
+                    <div class="form-group{{ $errors->has('noHP') ? ' has-danger' : '' }}">
+                      <input class="form-control{{ $errors->has('NoHP') ? ' is-invalid' : '' }}" name="noHP" id="input-noHp" type="text"/>
                     </div>
                   </div>
                 </div>
