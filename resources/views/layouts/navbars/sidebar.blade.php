@@ -17,28 +17,10 @@
             <p>{{ __('Dashboard') }}</p>
         </a>
       </li>
-      <li class="nav-item{{ $activePage == 'table' ? ' active' : '' }}">
-        <a class="nav-link" href="{{ route('table') }}">
+      <li class="nav-item{{ $activePage == 'supplier' ? ' active' : '' }}">
+        <a class="nav-link" href="{{ route('supplier.index') }}">
           <i class="material-icons">content_paste</i>
             <p>{{ __('Supplier') }}</p>
-        </a>
-      </li>
-      <li class="nav-item{{ $activePage == 'typography' ? ' active' : '' }}">
-        <a class="nav-link" href="{{ route('typography') }}">
-          <i class="material-icons">library_books</i>
-            <p>{{ __('Barang') }}</p>
-        </a>
-      </li>
-      <li class="nav-item{{ $activePage == 'icons' ? ' active' : '' }}">
-        <a class="nav-link" href="{{ route('icons') }}">
-          <i class="material-icons">bubble_chart</i>
-          <p>{{ __('Transaksi') }}</p>
-        </a>
-      </li>
-      <li class="nav-item{{ $activePage == 'map' ? ' active' : '' }}">
-        <a class="nav-link" href="{{ route('map') }}">
-          <i class="material-icons">location_ons</i>
-            <p>{{ __('User') }}</p>
         </a>
       </li>
     </ul>
