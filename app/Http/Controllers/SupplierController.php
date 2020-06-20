@@ -15,7 +15,8 @@ class SupplierController extends Controller
      */
     public function index()
     {
-        return view('supplier.supplierDex');
+        $data = Supplier::orderby('created_at', 'desc')->paginate(5);
+        return view('supplier.supplierDex', compact('data'));
     }
 
     /**

@@ -10,7 +10,8 @@ class BarangController extends Controller
 {
     public function index()
     {
-        return view('barang.barangDex');
+        $data = Barang::orderby('created_at', 'desc')->paginate(5);
+        return view('barang.barangDex', compact('data'));
     }
 
     public function create()
