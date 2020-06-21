@@ -16,7 +16,6 @@ class SupplierController extends Controller
     public function index()
     {
         $data = DB::table('suppliers')->get();
-        // ddd($data);
         return view('supplier.supplierDex', compact('data'));
     }
 
@@ -53,7 +52,6 @@ class SupplierController extends Controller
             'noHP' => $request->noHP
         );
 
-        // ddd($form_data);
         Supplier::create($form_data);
 
         return redirect()->route('supplier.index')->with('message', 'Supplier berhasil di Tambahkan');
@@ -67,7 +65,8 @@ class SupplierController extends Controller
      */
     public function show($id)
     {
-        return view('supplier.supplierView');
+        $data = Supplier::findOrFail($id);
+        return view('supplier.supplierView', compact('data'));
     }
 
     /**
@@ -78,7 +77,8 @@ class SupplierController extends Controller
      */
     public function edit($id)
     {
-        return view('supplier.supplierUp');
+        $data = Supplier::findOrFail($id);
+        return view('supplier.supplierUp', compact('data'));
     }
 
     /**
@@ -90,7 +90,18 @@ class SupplierController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'kodeSupplier'   =>  'required',
+            'namaSupplier' =>  'required'
+        ]);
+
+        $form_data = array(
+            'alamat'     =>  $request->alamat,
+            'namaKontak'   =>  $request->namaKontak,
+            'noHP' => $request->noHP
+        );
+//
+//        Supplier::update($id);
     }
 
     /**
