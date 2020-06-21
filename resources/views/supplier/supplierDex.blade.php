@@ -16,6 +16,17 @@
                     </div>
                 </div>
             </div>
+            @elseif (session('messageError'))
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="alert alert-warning">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <i class="material-icons">close</i>
+                            </button>
+                            <span>{{ session('messageError') }}</span>
+                        </div>
+                    </div>
+                </div>
             @endif
         </div>
 
@@ -55,13 +66,32 @@
                                     <td> {{$d->kodeSupplier}} </td>
                                     <td> {{$d->namaSupplier}} </td>
                                     <td> {{$d->noHP}} </td>
-                                    <td class="text-center">
-                                        @if( $d->status == 'aktif')
-                                            <button class="btn btn-sm btn-success">AKTIF</button>
-                                        @else
-                                            <button class="btn btn-sm btn-danger">NON-AKTIF</button>
-                                        @endif
-                                    </td>
+                                    @can('admin')
+                                        <td class="text-center">
+                                            @if( $d->status == 'aktif')
+                                                <form action="{{ route('supp.nonactive', $d->id) }}" method="post">
+                                                    @csrf
+                                                    @method('PUT')
+                                                    <button onclick="return confirm('Nonaktifkan Supplier ?')" type="submit" class="btn btn-sm btn-success">Aktif</button>
+                                                </form>
+                                            @else
+                                                <form action="{{ route('supp.active', $d->id) }}" method="post" >
+                                                    @csrf
+                                                    @method('PUT')
+                                                    <button onclick="return confirm('Aktifkan Supplier ?')" type="submit" class="btn btn-sm btn-danger">non-aktif</button>
+                                                </form>
+                                            @endif
+                                        </td>
+                                    @endcan
+                                    @can('kasir')
+                                        <td class="text-center">
+                                            @if( $d->status == 'aktif')
+                                                <button class="btn btn-sm btn-success">AKTIF</button>
+                                            @else
+                                                <button class="btn btn-sm btn-danger">NON-AKTIF</button>
+                                            @endif
+                                        </td>
+                                    @endcan
                                     <td class="text-center"> <a class="btn btn-info" href="{{route('supplier.show',$d->id)}}">Detail</a> </td>
                                 </tr>
                                 @endforeach

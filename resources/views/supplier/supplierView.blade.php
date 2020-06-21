@@ -3,6 +3,22 @@
 @section('content')
     <div class="content">
         <div class="container-fluid">
+
+            <div class="col-md-12">
+                @if (session('message'))
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="alert alert-success">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <i class="material-icons">close</i>
+                                </button>
+                                <span>{{ session('message') }}</span>
+                            </div>
+                        </div>
+                    </div>
+                @endif
+            </div>
+
             <div class="row justify-content-center">
                 <div class="col-md-8">
                     <div class="card ">

@@ -7,6 +7,7 @@
                 <div class="col-md-8">
                     <form method="post" action="{{ route('supplier.update', $data->id) }}" autocomplete="off" class="form-horizontal">
                         @csrf
+                        @method('PUT')
 
                         <div class="card ">
                             <div class="card-header card-header-primary">
@@ -17,6 +18,12 @@
                             <div class="card-body">
                                 <div class="text-right">
                                     <a href="{{ route('supplier.show', $data->id) }}" class="btn btn-sm btn-warning">Kembali</a>
+                                </div>
+
+                                <div hidden class="form-group {{ $errors->has('id') ? ' has-danger' : '' }}">
+                                    <label for="id" class="bmd-label-static">Kode Supplier</label>
+                                    <input type="text" class="form-control {{ $errors->has('id') ? ' is-invalid' : '' }}" id="id" name="id" value="{{ $data->id }}" readonly>
+                                    {{--                      <small id="KSHelp" class="form-text text-muted"><i>Example</i> : KODE - NOMOR SUPPLIER</small>--}}
                                 </div>
 
                                 <div class="form-group {{ $errors->has('kodeSupplier') ? ' has-danger' : '' }}">

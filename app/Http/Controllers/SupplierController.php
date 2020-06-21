@@ -100,8 +100,12 @@ class SupplierController extends Controller
             'namaKontak'   =>  $request->namaKontak,
             'noHP' => $request->noHP
         );
-//
-//        Supplier::update($id);
+
+        DB::table('suppliers')
+            ->where('id', '=', $id)
+            ->update($form_data);
+
+        return redirect()->route('supplier.show', $request->id)->with('message', 'Supplier berhasil di Perbaharui');
     }
 
     /**
@@ -113,5 +117,23 @@ class SupplierController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function statActivated($id)
+    {
+        DB::table('suppliers')
+            ->where('id', '=', $id)
+            ->update(['status' => 'aktif']);
+
+        return back()->with('message', 'Supplier di Aktifkan');
+    }
+
+    public function statDeActivated($id)
+    {
+        DB::table('suppliers')
+            ->where('id', '=', $id)
+            ->update(['status' => 'nonaktif']);
+
+        return back()->with('messageError', 'Supplier di non-Aktifkan');
     }
 }

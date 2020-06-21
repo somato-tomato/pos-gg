@@ -25,6 +25,8 @@ Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');
 
 Route::group(['middleware' => 'auth'], function () {
     // Route::get('/supplier', 'SupplierController@index')->name('home');
+    Route::put('supplier/{id}/nonaktif', 'SupplierController@statDeActivated')->name('supp.nonactive');
+    Route::put('supplier/{id}/aktif', 'SupplierController@statActivated')->name('supp.active');
     Route::resource('supplier', 'SupplierController');
 });
 
