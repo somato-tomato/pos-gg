@@ -62,17 +62,56 @@ class BarangController extends Controller
     public function show($id)
     {
         $data = Barang::findOrFail($id);
-        return view('barang.barangView', compact('data'));
+        $supp = DB::table('barangs')
+            ->join('suppliers', 'barangs.kodeSupplier', '=', 'suppliers.id')
+            ->select('suppliers.namaSupplier')
+            ->where('barangs.id', '=', $id)
+            ->first();
+
+        return view('barang.barangView', compact('data', 'supp'));
     }
 
-    public function edit()
+    public function edit($id)
     {
-        return view('barang.barangUp');
+        $data = Barang::findOrFail($id);
+        return view('barang.barangUp', compact('data'));
     }
 
-    public function update()
+    public function update(Request $request, $id)
     {
+        $request->validate([
+            'kodeSupplier'   =>  'required',
+            'kodeBarang' => 'required|unique:barangs',
+            'namaBarang' =>  'required',
+            'kategori'   =>  'required',
+            'satuan' =>  'required',
+            'hargaBeli' => 'required',
+            'hargaJualSatuan' => 'required',
+            'stock' => 'required',
+            'minStock' => 'required',
+            'jmlPerdus' => 'required'
+        ]);
 
+        $form_data = array(
+            'kodeSupplier'   =>  $request->kodeSupplier,
+            'kodeBarang' =>  $request->kodeBarang,
+            'namaBarang'     =>  $request->namaBarang,
+            'kategori'   =>  $request->kategori,
+            'satuan' => $request->satuan,
+            'hargaBeli' => $request->hargaBeli,
+            'hargaJualSatuan' => $request->hargaJualSatuan,
+            'stock' => $request->stock,
+            'minStock' => $request->minStock,
+            'jmlPerdus' => $request->jmlPerdus
+        );
+
+//        ddd($form_data);
+
+        DB::table('barangs')
+            ->where('id', '=', $id)
+            ->update($form_data);
+
+        return redirect()->route('barang.view', $request->id)->with('message', 'Barang berhasil di Perbaharui');
     }
 
     public function destroy()

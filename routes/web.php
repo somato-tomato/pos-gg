@@ -25,6 +25,8 @@ Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');
 
 Route::group(['middleware' => 'auth'], function () {
     //ROUTE BARANG
+    Route::put('barang/{id}/update', 'BarangController@update')->name('barang.update');
+    Route::get('barang/{id}/edit', 'BarangController@edit')->name('barang.edit');
     Route::get('barang/{id}/view', 'BarangController@show')->name('barang.view');
     Route::post('barang/save/create', 'BarangController@store')->name('barang.save');
     Route::get('barang/create', 'BarangController@create')->name('barang.create');

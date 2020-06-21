@@ -75,7 +75,7 @@
                                             <td> {{$d->hargaJualSatuan}} </td>
                                             <td> {{$d->stock}} </td>
                                             <td> {{$d->minStock}} </td>
-                                            <td class="text-center"> <a class="btn btn-info" href="{{route('supplier.show',$d->id)}}">Detail</a> </td>
+                                            <td class="text-center"> <a class="btn btn-info" href="{{route('barang.view',$d->id)}}">Detail</a> </td>
                                         </tr>
                                     @endforeach
                                     </tbody>
