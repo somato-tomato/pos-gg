@@ -92,6 +92,7 @@
                                             @endif
                                         </td>
                                     @endcan
+{{--                                    <td> {{$d->status}} </td>--}}
                                     <td class="text-center"> <a class="btn btn-info" href="{{route('supplier.show',$d->id)}}">Detail</a> </td>
                                 </tr>
                                 @endforeach

@@ -1,329 +1,91 @@
-@extends('layouts.app', ['activePage' => 'barang', 'titlePage' => __('Supplier')])
+@extends('layouts.app', ['activePage' => 'barang', 'titlePage' => __('Barang Masuk')])
 
 @section('content')
-<div class="content">
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-md-12">
-        <div class="card">
-          <div class="card-header card-header-primary">
-            <h4 class="card-title ">Barang</h4>
-            <p class="card-category">Data Barang</p>
-          </div>
-          <div class="card-body">
-            <div class="table-resp@extends('layouts.app', ['activePage' => 'table', 'titlePage' => __('Table List')])
+    <div class="content">
+        <div class="container-fluid">
 
-                @section('content')
-                <div class="content">
-                  <div class="container-fluid">
-                    <input class="btn btn-primary" type="button" value="Tambah Barang">
+            <div class="col-md-12">
+                @if (session('message'))
                     <div class="row">
-                      <div class="col-md-12">
-                        <div class="card">
-                          <div class="card-header card-header-primary">
-                            <h4 class="card-title ">Barang</h4>
-                            <p class="card-category">Data Barang</p>
-                          </div>
-                          <div class="card-body">
-                            <div class="table-responsive">
-                              <table class="table">
-                                <thead class=" text-primary">
-                                  <th>
-                                    ID
-                                  </th>
-                                  <th>
-                                    Kode
-                                  </th>
-                                  <th>
-                                    Nama Barang
-                                  </th>
-                                  <th>
-                                    Harga Beli
-                                  </th>
-                                  <th>
-                                    Harga Jual
-                                  </th>
-                                  <th>
-                                    Aksi
-                                  </th>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>
-
-                                        </td>
-                                    </tr>
-                                </tbody>
-                              </table>
+                        <div class="col-sm-12">
+                            <div class="alert alert-success">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <i class="material-icons">close</i>
+                                </button>
+                                <span>{{ session('message') }}</span>
                             </div>
-                          </div>
                         </div>
-                      </div>
                     </div>
-                  </div>
+                @elseif (session('messageError'))
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="alert alert-warning">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <i class="material-icons">close</i>
+                                </button>
+                                <span>{{ session('messageError') }}</span>
+                            </div>
+                        </div>
+                    </div>
+                @endif
+            </div>
+
+            <div class="row justify-content-center">
+                <div class="col-md-10">
+                    <div class="card">
+                        <div class="card-header card-header-primary">
+                            <h4 class="card-title ">Barang Masuk</h4>
+                            <p class="card-category">Data Barang Masuk</p>
+                        </div>
+                        <div class="card-body">
+                            <a href="{{ route('barang.create') }}" class="btn btn-primary btn-sm" type="button">Tambah Barang Masuk</a>
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead class=" text-primary">
+                                    <tr>
+                                        <th>
+                                            Kode Barang
+                                        </th>
+                                        <th>
+                                            Nama Barang
+                                        </th>
+                                        <th>
+                                            Nama Supplier
+                                        </th>
+                                        <th>
+                                            Harga Satuan
+                                        </th>
+                                        <th>
+                                            Stok
+                                        </th>
+                                        <th>
+                                            Min Stok
+                                        </th>
+                                        <th class="text-center">
+                                            Aksi
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach ($data as $d)
+                                        <tr>
+                                            <td> {{$d->kodeBarang}} </td>
+                                            <td> {{$d->namaBarang}} </td>
+                                            <td> {{$d->namaSupplier}} </td>
+                                            <td> {{$d->hargaJualSatuan}} </td>
+                                            <td> {{$d->stock}} </td>
+                                            <td> {{$d->minStock}} </td>
+                                            <td class="text-center"> <a class="btn btn-info" href="{{route('supplier.show',$d->id)}}">Detail</a> </td>
+                                        </tr>
+                                    @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                @endsection
-                onsive">
-              <table class="table">
-                <thead class=" text-primary">
-                  <th>
-                    ID
-                  </th>
-                  <th>
-                    Kode
-                  </th>
-                  <th>
-                    Nama Supplier
-                  </th>
-                  <th>
-                    No Hp
-                  </th>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>
-                      1
-                    </td>
-                    <td>
-                      Dakota Rice
-                    </td>
-                    <td>
-                      Niger
-                    </td>
-                    <td>
-                      Oud-Turnhout
-                    </td>
-                    <td class="text-primary">
-                      $36,738
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      2
-                    </td>
-                    <td>
-                      Minerva Hooper
-                    </td>
-                    <td>
-                      Curaçao
-                    </td>
-                    <td>
-                      Sinaai-Waas
-                    </td>
-                    <td class="text-primary">
-                      $23,789
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      3
-                    </td>
-                    <td>
-                      Sage Rodriguez
-                    </td>
-                    <td>
-                      Netherlands
-                    </td>
-                    <td>
-                      Baileux
-                    </td>
-                    <td class="text-primary">
-                      $56,142
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      4
-                    </td>
-                    <td>
-                      Philip Chaney
-                    </td>
-                    <td>
-                      Korea, South
-                    </td>
-                    <td>
-                      Overland Park
-                    </td>
-                    <td class="text-primary">
-                      $38,735
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      5
-                    </td>
-                    <td>
-                      Doris Greene
-                    </td>
-                    <td>
-                      Malawi
-                    </td>
-                    <td>
-                      Feldkirchen in Kärnten
-                    </td>
-                    <td class="text-primary">
-                      $63,542
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      6
-                    </td>
-                    <td>
-                      Mason Porter
-                    </td>
-                    <td>
-                      Chile
-                    </td>
-                    <td>
-                      Gloucester
-                    </td>
-                    <td class="text-primary">
-                      $78,615
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
             </div>
-          </div>
         </div>
-      </div>
-      <div class="col-md-12">
-        <div class="card card-plain">
-          <div class="card-header card-header-primary">
-            <h4 class="card-title mt-0"> Table on Plain Background</h4>
-            <p class="card-category"> Here is a subtitle for this table</p>
-          </div>
-          <div class="card-body">
-            <div class="table-responsive">
-              <table class="table table-hover">
-                <thead class="">
-                  <th>
-                    ID
-                  </th>
-                  <th>
-                    Name
-                  </th>
-                  <th>
-                    Country
-                  </th>
-                  <th>
-                    City
-                  </th>
-                  <th>
-                    Salary
-                  </th>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>
-                      1
-                    </td>
-                    <td>
-                      Dakota Rice
-                    </td>
-                    <td>
-                      Niger
-                    </td>
-                    <td>
-                      Oud-Turnhout
-                    </td>
-                    <td>
-                      $36,738
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      2
-                    </td>
-                    <td>
-                      Minerva Hooper
-                    </td>
-                    <td>
-                      Curaçao
-                    </td>
-                    <td>
-                      Sinaai-Waas
-                    </td>
-                    <td>
-                      $23,789
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      3
-                    </td>
-                    <td>
-                      Sage Rodriguez
-                    </td>
-                    <td>
-                      Netherlands
-                    </td>
-                    <td>
-                      Baileux
-                    </td>
-                    <td>
-                      $56,142
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      4
-                    </td>
-                    <td>
-                      Philip Chaney
-                    </td>
-                    <td>
-                      Korea, South
-                    </td>
-                    <td>
-                      Overland Park
-                    </td>
-                    <td>
-                      $38,735
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      5
-                    </td>
-                    <td>
-                      Doris Greene
-                    </td>
-                    <td>
-                      Malawi
-                    </td>
-                    <td>
-                      Feldkirchen in Kärnten
-                    </td>
-                    <td>
-                      $63,542
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      6
-                    </td>
-                    <td>
-                      Mason Porter
-                    </td>
-                    <td>
-                      Chile
-                    </td>
-                    <td>
-                      Gloucester
-                    </td>
-                    <td>
-                      $78,615
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
-  </div>
-</div>
 @endsection
+

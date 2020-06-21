@@ -49,7 +49,8 @@ class SupplierController extends Controller
             'namaSupplier' =>  $request->namaSupplier,
             'alamat'     =>  $request->alamat,
             'namaKontak'   =>  $request->namaKontak,
-            'noHP' => $request->noHP
+            'noHP' => $request->noHP,
+            'status' => $request->status
         );
 
         Supplier::create($form_data);

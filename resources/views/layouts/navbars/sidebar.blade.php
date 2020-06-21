@@ -23,6 +23,12 @@
             <p>{{ __('Supplier') }}</p>
         </a>
       </li>
+        <li class="nav-item{{ $activePage == 'barang' ? ' active' : '' }}">
+            <a class="nav-link" href="{{ route('barang.index') }}">
+                <i class="material-icons">content_paste</i>
+                <p>{{ __('Barang') }}</p>
+            </a>
+        </li>
     </ul>
   </div>
 </div>
