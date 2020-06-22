@@ -29,6 +29,12 @@
                 <p>{{ __('Barang') }}</p>
             </a>
         </li>
+        <li class="nav-item{{ $activePage == 'minStock' ? ' active' : '' }}">
+            <a class="nav-link" href="{{ route('stock.warn') }}">
+                <i class="material-icons">content_paste</i>
+                <p>{{ __('Stock Kurang') }}</p>
+            </a>
+        </li>
     </ul>
   </div>
 </div>

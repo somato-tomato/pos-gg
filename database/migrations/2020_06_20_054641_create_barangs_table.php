@@ -15,7 +15,7 @@ class CreateBarangsTable extends Migration
     {
         Schema::create('barangs', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('kodeSupplier');
+            $table->bigInteger('idSupplier');
             $table->string('kodeBarang');
             $table->string('namaBarang');
             $table->string('kategori');

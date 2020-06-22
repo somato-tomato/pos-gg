@@ -12,8 +12,8 @@ class BarangController extends Controller
     public function index()
     {
         $data = DB::table('barangs')
-            ->join('suppliers', 'barangs.kodeSupplier', '=', 'suppliers.id')
-            ->select('barangs.id', 'barangs.kodeBarang', 'barangs.namaBarang', 'suppliers.namaSupplier','barangs.hargaJualSatuan', 'barangs.stock', 'barangs.minStock')
+            ->join('suppliers', 'barangs.idSupplier', '=', 'suppliers.id')
+            ->select('barangs.id', 'barangs.kodeBarang', 'barangs.namaBarang', 'suppliers.namaSupplier','barangs.hargaJualSatuan', 'barangs.stock')
             ->get();
 
 //        $data = Barang::orderby('created_at', 'desc')->paginate(5);
@@ -29,7 +29,7 @@ class BarangController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'kodeSupplier'   =>  'required',
+            'idSupplier'   =>  'required',
             'kodeBarang' => 'required|unique:barangs',
             'namaBarang' =>  'required',
             'kategori'   =>  'required',
@@ -42,7 +42,7 @@ class BarangController extends Controller
         ]);
 
         $form_data = array(
-            'kodeSupplier'   =>  $request->kodeSupplier,
+            'idSupplier'   =>  $request->idSupplier,
             'kodeBarang' =>  $request->kodeBarang,
             'namaBarang'     =>  $request->namaBarang,
             'kategori'   =>  $request->kategori,
@@ -63,7 +63,7 @@ class BarangController extends Controller
     {
         $data = Barang::findOrFail($id);
         $supp = DB::table('barangs')
-            ->join('suppliers', 'barangs.kodeSupplier', '=', 'suppliers.id')
+            ->join('suppliers', 'barangs.idSupplier', '=', 'suppliers.id')
             ->select('suppliers.namaSupplier')
             ->where('barangs.id', '=', $id)
             ->first();
@@ -80,7 +80,7 @@ class BarangController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'kodeSupplier'   =>  'required',
+            'idSupplier'   =>  'required',
             'kodeBarang' => 'required|unique:barangs',
             'namaBarang' =>  'required',
             'kategori'   =>  'required',
@@ -93,7 +93,7 @@ class BarangController extends Controller
         ]);
 
         $form_data = array(
-            'kodeSupplier'   =>  $request->kodeSupplier,
+            'idSupplier'   =>  $request->idSupplier,
             'kodeBarang' =>  $request->kodeBarang,
             'namaBarang'     =>  $request->namaBarang,
             'kategori'   =>  $request->kategori,
@@ -104,8 +104,6 @@ class BarangController extends Controller
             'minStock' => $request->minStock,
             'jmlPerdus' => $request->jmlPerdus
         );
-
-//        ddd($form_data);
 
         DB::table('barangs')
             ->where('id', '=', $id)

@@ -20,9 +20,9 @@
                                 </div>
 
                                 <div class="form-row">
-                                    <div class="form-group {{ $errors->has('kodeSupplier') ? ' has-danger' : '' }} col-md-6">
-                                        <label for="kodeSupplier" class="bmd-label-static">Kode Supplier</label>
-                                        <input type="text" class="form-control {{ $errors->has('kodeSupplier') ? ' is-invalid' : '' }}" id="kodeSupplier" name="kodeSupplier">
+                                    <div class="form-group {{ $errors->has('idSupplier') ? ' has-danger' : '' }} col-md-6">
+                                        <label for="idSupplier" class="bmd-label-static">ID Supplier</label>
+                                        <input type="text" class="form-control {{ $errors->has('idSupplier') ? ' is-invalid' : '' }}" id="idSupplier" name="idSupplier">
                                         <small id="KSHelp" class="form-text text-muted">Diisi dengan memilih Kode Supplier</small>
                                     </div>
 
