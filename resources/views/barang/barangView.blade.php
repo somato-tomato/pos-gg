@@ -4,7 +4,7 @@
     <div class="content">
         <div class="container-fluid">
             <div class="row justify-content-center">
-                <div class="col-md-8">
+                <div class="col-md-10">
                     <div class="card ">
                         <div class="card-header card-header-primary">
                             <h4 class="card-title">{{ $data->namaBarang }}</h4>
@@ -64,9 +64,9 @@
                                 </div>
 
                                 <div class="form-group {{ $errors->has('stock') ? ' has-danger' : '' }} col-md-2">
-                                    <label for="stock" class="bmd-label-static">Stock Awal</label>
+                                    <label for="stock" class="bmd-label-static">Stock</label>
                                     <input type="number" class="form-control {{ $errors->has('stock') ? ' is-invalid' : '' }}" id="stock" name="stock" value="{{ $data->stock }}" readonly>
-                                    <small id="KSHelp" class="form-text text-muted">Stok awal dlm satuan</small>
+                                    <small id="KSHelp" class="form-text text-muted">Stok dlm satuan</small>
                                 </div>
 
                                 <div class="form-group {{ $errors->has('minStock') ? ' has-danger' : '' }} col-md-2">

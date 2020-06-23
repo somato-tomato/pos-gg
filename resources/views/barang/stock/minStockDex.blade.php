@@ -71,7 +71,7 @@
                                             <td> {{$d->stock}} </td>
                                             <td> {{$d->minStock}} </td>
                                             <td class="text-center">
-                                                <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#stockModal">
+                                                <button type="button" class="btn btn-primary btn-sm" data-idbarang="{{ $d->id }}" data-namabarang="{{ $d->namaBarang }}" data-stock="{{ $d->stock }}" data-toggle="modal" data-target="#stockModal">
                                                     Tambah Stock
                                                 </button>
                                             </td>
@@ -80,9 +80,8 @@
                                         <div class="modal fade" id="stockModal" tabindex="-1" role="dialog" aria-labelledby="stockModalLabel" aria-hidden="true">
                                             <div class="modal-dialog" role="document">
                                                 <div class="modal-content">
-                                                    <form method="post" action="{{ route('stock.nambah', $d->id) }}" autocomplete="off" class="form-horizontal">
+                                                    <form method="post" action="{{ route('stock.nambah') }}" autocomplete="off" class="form-horizontal">
                                                         @csrf
-                                                        @method('PUT')
                                                         <div class="modal-header">
                                                             <h5 class="modal-title" id="stockModalLabel">Tambah Stock</h5>
                                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -92,18 +91,18 @@
                                                         <div class="modal-body">
                                                             <div hidden class="form-group {{ $errors->has('idBarang') ? ' has-danger' : '' }}">
                                                                 <label for="idBarang" class="bmd-label-static">ID BARANG</label>
-                                                                <input type="text" class="form-control {{ $errors->has('idBarang') ? ' is-invalid' : '' }}" id="idBarang" name="idBarang" value="{{ $d->id }}">
+                                                                <input type="text" class="form-control idBarang" id="idBarang" name="idBarang">
                                                             </div>
 
                                                             <div class="form-row">
                                                                 <div class="form-group {{ $errors->has('namaBarang') ? ' has-danger' : '' }} col-md-6">
                                                                     <label for="namaBarang" class="bmd-label-static">Kode Supplier</label>
-                                                                    <input type="text" class="form-control {{ $errors->has('namaBarang') ? ' is-invalid' : '' }}" id="namaBarang" name="namaBarang" value="{{ $d->namaBarang }}" readonly>
+                                                                    <input type="text" class="form-control namaBarang" id="namaBarang" name="namaBarang" readonly>
                                                                 </div>
 
                                                                 <div class="form-group {{ $errors->has('stock') ? ' has-danger' : '' }} col-md-6">
                                                                     <label for="stock" class="bmd-label-static">Sisa Stock</label>
-                                                                    <input type="text" class="form-control {{ $errors->has('stock') ? ' is-invalid' : '' }}" id="stock" name="stock" value="{{ $d->stock }}" readonly>
+                                                                    <input type="text" class="form-control stock" id="stock" name="stock" readonly>
                                                                 </div>
                                                             </div>
 
@@ -135,5 +134,21 @@
             </div>
         </div>
     </div>
+    <script src="{{ asset('material/js/core/jquery.min.js') }}"></script>
+    <script src="{{ asset('material/js/core/bootstrap-material-design.min.js') }}"></script>
+    <script>
+        $('#stockModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget) // Button that triggered the modal
+            var idBarang = button.data('idbarang')
+            var namaBarang = button.data('namabarang')
+            var stock = button.data('stock')// Extract info from data-* attributes
+            // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+            // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+            var modal = $(this)
+            modal.find('.modal-body input.idBarang').val(idBarang)
+            modal.find('.modal-body input.namaBarang').val(namaBarang)
+            modal.find('.modal-body input.stock').val(stock)
+        })
+    </script>
 @endsection
 

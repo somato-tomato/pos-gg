@@ -4,7 +4,7 @@
     <div class="content">
         <div class="container-fluid">
             <div class="row justify-content-center">
-                <div class="col-md-8">
+                <div class="col-md-10">
                     <form method="post" action="{{ route('barang.save') }}" autocomplete="off" class="form-horizontal">
                         @csrf
 

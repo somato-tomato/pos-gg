@@ -22,6 +22,9 @@ class CreateBarangsTable extends Migration
             $table->string('satuan');
             $table->integer('hargaBeli');
             $table->integer('hargaJualSatuan');
+            $table->integer('stock');
+            $table->integer('minStock');
+            $table->integer('jmlPerdus');
             $table->timestamps();
         });
     }

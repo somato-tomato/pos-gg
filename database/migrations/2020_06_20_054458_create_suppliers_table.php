@@ -20,6 +20,7 @@ class CreateSuppliersTable extends Migration
             $table->string('alamat');
             $table->string('namaKontak');
             $table->string('noHP');
+            $table->string('status');
             $table->timestamps();
         });
     }

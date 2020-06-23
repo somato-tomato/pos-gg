@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 
 class BarangStockController extends Controller
 {
-    public function stockAdd(Request $request, $id)
+    public function stockAdd(Request $request)
     {
         $request->validate([
             'idBarang'   =>  'required',
@@ -22,7 +22,9 @@ class BarangStockController extends Controller
             'keterangan'   =>  $request->keterangan
         );
 
-        DB::table('barangs')->increment('stock', $request->stockMasuk, ['id' => $id]);
+        DB::table('barangs')
+            ->where('id', '=', $request->idBarang)
+            ->increment('stock', $request->stockMasuk);
 
         BarangStock::create($form_data);
 
@@ -34,7 +36,7 @@ class BarangStockController extends Controller
         $data = DB::table('barangs')
             ->join('suppliers', 'barangs.idSupplier', '=', 'suppliers.id')
             ->select('barangs.id', 'barangs.kodeBarang', 'barangs.namaBarang', 'suppliers.namaSupplier', 'barangs.stock', 'barangs.minStock')
-            ->where('barangs.stock', '<', 'barangs.minStock')
+            ->whereRaw('barangs.stock <= barangs.minStock')
             ->get();
 
         return view('barang.stock.minStockDex', compact('data'));
