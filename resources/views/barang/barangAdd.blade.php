@@ -20,10 +20,11 @@
                                 </div>
 
                                 <div class="form-row">
-                                    <div class="form-group {{ $errors->has('idSupplier') ? ' has-danger' : '' }} col-md-6">
-                                        <label for="idSupplier" class="bmd-label-static">ID Supplier</label>
-                                        <input type="text" class="form-control {{ $errors->has('idSupplier') ? ' is-invalid' : '' }}" id="idSupplier" name="idSupplier">
-                                        <small id="KSHelp" class="form-text text-muted">Diisi dengan memilih Kode Supplier</small>
+                                    <div class="form-group col-md-6">
+
+                                        <label for="id_label_single">
+                                            <select id="namaSupplier" class="form-control namaSupplier" name="idSupplier"></select>
+                                        </label>
                                     </div>
 
                                     <div class="form-group {{ $errors->has('kodeBarang') ? ' has-danger' : '' }} col-md-6">
@@ -94,4 +95,28 @@
             </div>
         </div>
     </div>
+    <script src="{{ asset('material/js/core/jquery.min.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+    <script type="text/javascript">
+        $('.namaSupplier').select2({
+            placeholder: 'Masukan Nama Supplier Barang',
+            theme: 'material',
+            ajax: {
+                url: '{{ route('barang.loadSupplier') }}',
+                dataType: 'json',
+                delay: 250,
+                processResults: function (data) {
+                    return {
+                        results:  $.map(data, function (item) {
+                            return {
+                                text: item.namaSupplier,
+                                id: item.id
+                            }
+                        })
+                    };
+                },
+                cache: true
+            }
+        });
+    </script>
 @endsection

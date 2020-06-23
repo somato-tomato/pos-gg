@@ -116,4 +116,16 @@ class BarangController extends Controller
     {
 
     }
+
+    public function loadSupplier(Request $request)
+    {
+        if ($request->has('q')) {
+            $namaSupplier = $request->q;
+            $data = DB::table('suppliers')
+                ->select('id', 'namaSupplier')
+                ->where([['namaSupplier', 'LIKE', "%$namaSupplier%"],['status', '=', 'aktif']])
+                ->get();
+            return response()->json($data);
+        }
+    }
 }

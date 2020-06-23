@@ -28,6 +28,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('barang/stock-kurang', 'BarangStockController@stockWarn')->name('stock.warn');
     Route::post('barang/tambah', 'BarangStockController@stockAdd')->name('stock.nambah');
     //ROUTE BARANG
+    Route::get('/barang/supplier', 'BarangController@loadSupplier')->name('barang.loadSupplier');
     Route::put('barang/{id}/update', 'BarangController@update')->name('barang.update');
     Route::get('barang/{id}/edit', 'BarangController@edit')->name('barang.edit');
     Route::get('barang/{id}/view', 'BarangController@show')->name('barang.view');
