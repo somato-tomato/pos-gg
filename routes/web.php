@@ -27,8 +27,14 @@ Route::group(['middleware' => 'auth'], function () {
     //ROUTE STOCK BARANG MASUK
     Route::get('barang/stock-kurang', 'BarangStockController@stockWarn')->name('stock.warn');
     Route::post('barang/tambah', 'BarangStockController@stockAdd')->name('stock.nambah');
+    //ROUTE SUPPLIER BARANG
+    Route::get('barang-supplier/list-barang', 'BarangSupplierController@loadBarang')->name('bSupplier.loadBarang');
+    Route::get('barang-supplier/list-supplier', 'BarangSupplierController@loadSupplier')->name('bSupplier.loadSupplier');
+    Route::post('barang-supplier/update', 'BarangSupplierController@update')->name('bSupplier.update');
+    Route::post('barang-supplier/save', 'BarangSupplierController@store')->name('bSupplier.store');
+    Route::get('barang-supplier/create', 'BarangSupplierController@create')->name('bSupplier.create');
+    Route::get('barang-supplier/', 'BarangSupplierController@index')->name('bSupplier.index');
     //ROUTE BARANG
-    Route::get('/barang/supplier', 'BarangController@loadSupplier')->name('barang.loadSupplier');
     Route::put('barang/{id}/update', 'BarangController@update')->name('barang.update');
     Route::get('barang/{id}/edit', 'BarangController@edit')->name('barang.edit');
     Route::get('barang/{id}/view', 'BarangController@show')->name('barang.view');

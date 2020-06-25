@@ -7,6 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 class Barang extends Model
 {
     protected $fillable = [
-        'idSupplier', 'kodeBarang', 'namaBarang', 'kategori', 'satuan', 'hargaBeli', 'hargaJualSatuan','stock','minStock','jmlPerdus'
+        'kodeBarang',
+        'namaBarang',
+        'kategori',
+        'satuan',
+        'hargaJualSatuan',
+        'stock',
+        'minStock',
+        'jmlPerdus'
     ];
 }

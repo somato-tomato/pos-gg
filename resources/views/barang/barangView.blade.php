@@ -16,28 +16,28 @@
                                 <a href="{{ route('barang.index') }}" class="btn btn-sm btn-warning">Kembali</a>
                             </div>
 
-                            <div class="form-row">
-                                <div class="form-group {{ $errors->has('namaSupplier') ? ' has-danger' : '' }} col-md-6">
-                                    <label for="namaSupplier" class="bmd-label-static">Supplier</label>
-                                    <input type="text" class="form-control {{ $errors->has('namaSupplier') ? ' is-invalid' : '' }}" id="namaSupplier" name="namaSupplier" value="{{ $supp->namaSupplier }}" readonly>
+{{--                            <div class="form-row">--}}
+{{--                                <div class="form-group {{ $errors->has('namaSupplier') ? ' has-danger' : '' }} col-md-6">--}}
+{{--                                    <label for="namaSupplier" class="bmd-label-static">Supplier</label>--}}
+{{--                                    <input type="text" class="form-control {{ $errors->has('namaSupplier') ? ' is-invalid' : '' }}" id="namaSupplier" name="namaSupplier" value="{{ $supp->namaSupplier }}" readonly>--}}
 {{--                                    <small id="KSHelp" class="form-text text-muted">Diisi dengan memilih Kode Supplier</small>--}}
-                                </div>
+{{--                                </div>--}}
+{{--                            </div>--}}
 
-                                <div class="form-group {{ $errors->has('kodeBarang') ? ' has-danger' : '' }} col-md-6">
+                            <div class="form-row">
+                                <div class="form-group {{ $errors->has('kodeBarang') ? ' has-danger' : '' }} col-md-4">
                                     <label for="kodeBarang" class="bmd-label-static">Kode Barang</label>
                                     <input type="text" class="form-control {{ $errors->has('kodeBarang') ? ' is-invalid' : '' }}" id="kodeBarang" name="kodeBarang" value="{{ $data->kodeBarang }}" readonly>
                                     <small id="KSHelp" class="form-text text-muted">Diisi dengan Kode Barang</small>
                                 </div>
-                            </div>
 
-                            <div class="form-row">
-                                <div class="form-group {{ $errors->has('namaBarang') ? ' has-danger' : '' }} col-md-6">
+                                <div class="form-group {{ $errors->has('namaBarang') ? ' has-danger' : '' }} col-md-4">
                                     <label for="namaBarang" class="bmd-label-static">Nama Barang</label>
                                     <input type="text" class="form-control {{ $errors->has('namaBarang') ? ' is-invalid' : '' }}" id="namaBarang" name="namaBarang" value="{{ $data->namaBarang }}" readonly>
                                     <small id="KSHelp" class="form-text text-muted">Diisi dengan Nama Barang</small>
                                 </div>
 
-                                <div class="form-group {{ $errors->has('kategori') ? ' has-danger' : '' }} col-md-6">
+                                <div class="form-group {{ $errors->has('kategori') ? ' has-danger' : '' }} col-md-4">
                                     <label for="kategori" class="bmd-label-static">Kategori</label>
                                     <input type="text" class="form-control {{ $errors->has('kategori') ? ' is-invalid' : '' }}" id="kategori" name="kategori" value="{{ $data->kategori }}" readonly>
                                     <small id="KSHelp" class="form-text text-muted">Diisi dengan Kategori dari Barang</small>
@@ -45,13 +45,13 @@
                             </div>
 
                             <div class="form-row">
-                                <div class="form-group {{ $errors->has('hargaBeli') ? ' has-danger' : '' }} col-md-2">
-                                    <label for="hargaBeli" class="bmd-label-static">Harga Beli</label>
-                                    <input type="number" class="form-control {{ $errors->has('hargaBeli') ? ' is-invalid' : '' }}" id="hargaBeli" name="hargaBeli" value="{{ $data->hargaBeli }}" readonly>
-                                    <small id="KSHelp" class="form-text text-muted">Harga Beli dari Supplier</small>
-                                </div>
+{{--                                <div class="form-group {{ $errors->has('hargaBeli') ? ' has-danger' : '' }} col-md-2">--}}
+{{--                                    <label for="hargaBeli" class="bmd-label-static">Harga Beli</label>--}}
+{{--                                    <input type="number" class="form-control {{ $errors->has('hargaBeli') ? ' is-invalid' : '' }}" id="hargaBeli" name="hargaBeli" value="{{ $data->hargaBeli }}" readonly>--}}
+{{--                                    <small id="KSHelp" class="form-text text-muted">Harga Beli dari Supplier</small>--}}
+{{--                                </div>--}}
 
-                                <div class="form-group {{ $errors->has('hargaJualSatuan') ? ' has-danger' : '' }} col-md-2">
+                                <div class="form-group {{ $errors->has('hargaJualSatuan') ? ' has-danger' : '' }} col-md-4">
                                     <label for="hargaJualSatuan" class="bmd-label-static">Harga Jual Satuan</label>
                                     <input type="number" class="form-control {{ $errors->has('hargaJualSatuan') ? ' is-invalid' : '' }}" id="hargaJualSatuan" name="hargaJualSatuan" value="{{ $data->hargaJualSatuan }}" readonly>
                                     <small id="KSHelp" class="form-text text-muted">Harga Satuan Barang</small>

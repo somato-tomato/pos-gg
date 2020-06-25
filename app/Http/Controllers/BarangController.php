@@ -12,11 +12,8 @@ class BarangController extends Controller
     public function index()
     {
         $data = DB::table('barangs')
-            ->join('suppliers', 'barangs.idSupplier', '=', 'suppliers.id')
-            ->select('barangs.id', 'barangs.kodeBarang', 'barangs.namaBarang', 'suppliers.namaSupplier','barangs.hargaJualSatuan', 'barangs.stock')
+            ->select('id', 'kodeBarang', 'namaBarang','hargaJualSatuan', 'stock')
             ->get();
-
-//        $data = Barang::orderby('created_at', 'desc')->paginate(5);
 
         return view('barang.barangDex', compact('data'));
     }
@@ -29,12 +26,10 @@ class BarangController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'idSupplier'   =>  'required',
             'kodeBarang' => 'required|unique:barangs',
             'namaBarang' =>  'required',
             'kategori'   =>  'required',
             'satuan' =>  'required',
-            'hargaBeli' => 'required',
             'hargaJualSatuan' => 'required',
             'stock' => 'required',
             'minStock' => 'required',
@@ -42,12 +37,10 @@ class BarangController extends Controller
         ]);
 
         $form_data = array(
-            'idSupplier'   =>  $request->idSupplier,
             'kodeBarang' =>  $request->kodeBarang,
             'namaBarang'     =>  $request->namaBarang,
             'kategori'   =>  $request->kategori,
             'satuan' => $request->satuan,
-            'hargaBeli' => $request->hargaBeli,
             'hargaJualSatuan' => $request->hargaJualSatuan,
             'stock' => $request->stock,
             'minStock' => $request->minStock,
@@ -62,13 +55,8 @@ class BarangController extends Controller
     public function show($id)
     {
         $data = Barang::findOrFail($id);
-        $supp = DB::table('barangs')
-            ->join('suppliers', 'barangs.idSupplier', '=', 'suppliers.id')
-            ->select('suppliers.namaSupplier')
-            ->where('barangs.id', '=', $id)
-            ->first();
 
-        return view('barang.barangView', compact('data', 'supp'));
+        return view('barang.barangView', compact('data'));
     }
 
     public function edit($id)
@@ -80,12 +68,10 @@ class BarangController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'idSupplier'   =>  'required',
             'kodeBarang' => 'required',
             'namaBarang' =>  'required',
             'kategori'   =>  'required',
             'satuan' =>  'required',
-            'hargaBeli' => 'required',
             'hargaJualSatuan' => 'required',
             'stock' => 'required',
             'minStock' => 'required',
@@ -93,12 +79,10 @@ class BarangController extends Controller
         ]);
 
         $form_data = array(
-            'idSupplier'   =>  $request->idSupplier,
             'kodeBarang' =>  $request->kodeBarang,
             'namaBarang'     =>  $request->namaBarang,
             'kategori'   =>  $request->kategori,
             'satuan' => $request->satuan,
-            'hargaBeli' => $request->hargaBeli,
             'hargaJualSatuan' => $request->hargaJualSatuan,
             'stock' => $request->stock,
             'minStock' => $request->minStock,
@@ -115,17 +99,5 @@ class BarangController extends Controller
     public function destroy()
     {
 
-    }
-
-    public function loadSupplier(Request $request)
-    {
-        if ($request->has('q')) {
-            $namaSupplier = $request->q;
-            $data = DB::table('suppliers')
-                ->select('id', 'namaSupplier')
-                ->where([['namaSupplier', 'LIKE', "%$namaSupplier%"],['status', '=', 'aktif']])
-                ->get();
-            return response()->json($data);
-        }
     }
 }
