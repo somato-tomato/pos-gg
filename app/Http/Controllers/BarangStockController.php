@@ -19,10 +19,11 @@ class BarangStockController extends Controller
         $form_data = array(
             'idBarang'     =>  $request->idBarang,
             'idSupplier' => $request->idSupplier,
-            'namaBarang'   =>  $request->namaBarang,
             'stockMasuk'   =>  $request->stockMasuk,
             'keterangan'   =>  $request->keterangan
         );
+
+//        ddd($form_data);
 
         DB::table('barangs')
             ->where('id', '=', $request->idBarang)
@@ -40,7 +41,24 @@ class BarangStockController extends Controller
             ->whereRaw('stock <= minStock')
             ->get();
 
-        return view('barang.stock.minStockDex', compact('data'));
+        $kurang = DB::table('barangs')
+            ->whereRaw('stock <= minStock')
+            ->pluck('namaBarang', 'id');
+
+        $kurang->prepend('Pilih Barang', '0');
+
+        return view('barang.stock.minStockDex', compact('data', 'kurang'));
+    }
+
+    public function getSupplier($id)
+    {
+        $supplier = DB::table('barang_suppliers')
+            ->join('suppliers', 'barang_suppliers.idSupplier', '=', 'suppliers.id')
+            ->where('barang_suppliers.idBarang', $id)
+            ->pluck('suppliers.namaSupplier','suppliers.id');
+        $supplier->prepend('Pilih Supplier', '0');
+
+        return json_encode($supplier);
     }
 
 }

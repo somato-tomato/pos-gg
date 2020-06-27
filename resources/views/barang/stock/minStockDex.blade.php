@@ -42,7 +42,7 @@
                                 Tambah Stock
                             </button>
                             <div class="modal fade" id="stockModal" tabindex="-1" role="dialog" aria-labelledby="stockModalLabel" aria-hidden="true">
-                                <div class="modal-dialog modal-sm" role="document">
+                                <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <form method="post" action="{{ route('stock.nambah') }}" autocomplete="off" class="form-horizontal">
                                             @csrf
@@ -53,40 +53,27 @@
                                                 </button>
                                             </div>
                                             <div class="modal-body">
-                                                <div hidden class="form-group {{ $errors->has('idBarang') ? ' has-danger' : '' }}">
-                                                    <label for="idBarang" class="bmd-label-static">ID BARANG</label>
-                                                    <input type="text" class="form-control idBarang" id="idBarang" name="idBarang">
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <label for="id_label_single"> Nama Barang
-                                                        <select id="namaBarang" class="form-control namaBarang" name="idBarang"></select>
-                                                    </label>
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <label for="id_label_single"> Nama Barang
-                                                        <select id="namaBarang" class="form-control namaBarang" name="idBarang"></select>
-                                                    </label>
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <label for="inputState">State</label>
-                                                    <select id="inputState" class="form-control">
-                                                        <option selected>Choose...</option>
-                                                        <option>...</option>
-                                                    </select>
-                                                </div>
+{{--                                                <div class="form-group">--}}
+{{--                                                    <label for="id_label_single"> Nama Barang--}}
+{{--                                                        <select id="namaBarang" class="form-control namaBarang" name="idBarang"></select>--}}
+{{--                                                    </label>--}}
+{{--                                                </div>--}}
 
                                                 <div class="form-row">
                                                     <div class="form-group col-md-6">
-                                                        <label for="inputCity">City</label>
-                                                        <input type="text" class="form-control" id="inputCity">
+                                                        <label for="namaBarang">Nama Barang</label>
+                                                        <select id="namaBarang" name="idBarang" class="form-control">
+                                                            @foreach ($kurang as $key => $value)
+                                                                <option value="{{ $key }}">{{ $value }}</option>
+                                                            @endforeach
+                                                        </select>
                                                     </div>
 
-                                                    <div class="form-group col-md-2 ml-auto">
-                                                        <label for="inputZip">Zip</label>
-                                                        <input type="text" class="form-control" id="inputZip">
+                                                    <div class="form-group col-md-6">
+                                                        <label for="namaSupplier">Nama Supplier</label>
+                                                        <select id="namaSupplier" name="idSupplier" class="form-control">
+                                                            <option>Pilih Supplier</option>
+                                                        </select>
                                                     </div>
                                                 </div>
 
@@ -135,7 +122,6 @@
                                             <td> {{$d->stock}} </td>
                                             <td> {{$d->minStock}} </td>
                                         </tr>
-                                        <!-- Modal -->
                                     @endforeach
                                     </tbody>
                                 </table>
@@ -149,27 +135,48 @@
     <script src="{{ asset('material/js/core/jquery.min.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
     <script>
-        $('#namaBarang').select2({
-            dropdownParent: $('#stockModal'),
-            placeholder: 'Masukan Nama Barang',
-            theme: 'material',
-            ajax: {
-                url: '{{ route('bSupplier.loadBarang') }}',
-                dataType: 'json',
-                delay: 250,
-                processResults: function (data) {
-                    return {
-                        results:  $.map(data, function (item) {
-                            return {
-                                text: item.namaBarang,
-                                id: item.id
-                            }
-                        })
-                    };
-                },
-                cache: true
-            }
+        jQuery(document).ready(function () {
+            jQuery('select[name="idBarang"]').on('change', function () {
+                var idSupplier = jQuery(this).val();
+                if (idSupplier) {
+                    jQuery.ajax({
+                        url: +idSupplier+'/supplier',
+                        type: "GET",
+                        dataType: "json",
+                        success: function (data) {
+                            console.log(data);
+                            jQuery('select[name="idSupplier"]').empty();
+                            jQuery.each(data, function (key, value) {
+                                $('select[name="idSupplier"]').append('<option value="' + key + '">' + value + '</option>');
+                            });
+                        }
+                    });
+                } else {
+                    $('select[name="idSupplier"]').empty();
+                }
+            });
         });
+        {{--$('#namaBarang').select2({--}}
+        {{--    dropdownParent: $('#stockModal'),--}}
+        {{--    placeholder: 'Masukan Nama Barang',--}}
+        {{--    theme: 'material',--}}
+        {{--    ajax: {--}}
+        {{--        url: '{{ route('bSupplier.loadBarang') }}',--}}
+        {{--        dataType: 'json',--}}
+        {{--        delay: 250,--}}
+        {{--        processResults: function (data) {--}}
+        {{--            return {--}}
+        {{--                results:  $.map(data, function (item) {--}}
+        {{--                    return {--}}
+        {{--                        text: item.namaBarang,--}}
+        {{--                        id: item.id--}}
+        {{--                    }--}}
+        {{--                })--}}
+        {{--            };--}}
+        {{--        },--}}
+        {{--        cache: true--}}
+        {{--    }--}}
+        {{--});--}}
     </script>
 @endsection
 

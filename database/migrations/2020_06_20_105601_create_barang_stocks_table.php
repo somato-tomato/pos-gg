@@ -17,7 +17,6 @@ class CreateBarangStocksTable extends Migration
             $table->id();
             $table->bigInteger('idSupplier');
             $table->bigInteger('idBarang');
-            $table->string('namaBarang');
             $table->Integer('stockMasuk');
             $table->String('keterangan');
             $table->timestamps();

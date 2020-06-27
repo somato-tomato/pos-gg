@@ -25,6 +25,7 @@ Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');
 
 Route::group(['middleware' => 'auth'], function () {
     //ROUTE STOCK BARANG MASUK
+    Route::get('barang/{id}/supplier', 'BarangStockController@getSupplier')->name('stock.supp');
     Route::get('barang/stock-kurang', 'BarangStockController@stockWarn')->name('stock.warn');
     Route::post('barang/tambah', 'BarangStockController@stockAdd')->name('stock.nambah');
     //ROUTE SUPPLIER BARANG
