@@ -12,11 +12,13 @@ class BarangStockController extends Controller
     {
         $request->validate([
             'idBarang'   =>  'required',
+            'idSupplier' => 'required',
             'stockMasuk' =>  'required'
         ]);
 
         $form_data = array(
             'idBarang'     =>  $request->idBarang,
+            'idSupplier' => $request->idSupplier,
             'namaBarang'   =>  $request->namaBarang,
             'stockMasuk'   =>  $request->stockMasuk,
             'keterangan'   =>  $request->keterangan
@@ -34,9 +36,8 @@ class BarangStockController extends Controller
     public function stockWarn()
     {
         $data = DB::table('barangs')
-            ->join('suppliers', 'barangs.idSupplier', '=', 'suppliers.id')
-            ->select('barangs.id', 'barangs.kodeBarang', 'barangs.namaBarang', 'suppliers.namaSupplier', 'barangs.stock', 'barangs.minStock')
-            ->whereRaw('barangs.stock <= barangs.minStock')
+            ->select('id', 'kodeBarang', 'namaBarang', 'stock', 'minStock')
+            ->whereRaw('stock <= minStock')
             ->get();
 
         return view('barang.stock.minStockDex', compact('data'));

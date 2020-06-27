@@ -15,6 +15,7 @@ class CreateBarangStocksTable extends Migration
     {
         Schema::create('barang_stocks', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('idSupplier');
             $table->bigInteger('idBarang');
             $table->string('namaBarang');
             $table->Integer('stockMasuk');
