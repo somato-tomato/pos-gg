@@ -112,5 +112,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="select2-bootstrap-theme" level="application" />
+    <orderEntry type="library" name="dataTables.bootstrap4" level="application" />
   </component>
 </module>

@@ -3,19 +3,28 @@
 namespace App\Http\Controllers;
 
 use App\Barang;
-use App\Supplier;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Yajra\DataTables\DataTables;
 
 class BarangController extends Controller
 {
     public function index()
     {
+        return view('barang.barangDex');
+    }
+
+    public function getBarang()
+    {
         $data = DB::table('barangs')
             ->select('id', 'kodeBarang', 'namaBarang','hargaJualSatuan', 'stock')
             ->get();
 
-        return view('barang.barangDex', compact('data'));
+        return Datatables::of($data)
+            ->addColumn('lihat', function($data) {
+                return '<a class="btn btn-xs btn-success" href="'.route('barang.view', $data->id).'">Lihat</a>';
+            })
+            ->rawColumns(['lihat'])->make(true);
     }
 
     public function create()

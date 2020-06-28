@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Supplier;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Yajra\DataTables\DataTables;
 
 class SupplierController extends Controller
 {
@@ -15,9 +17,33 @@ class SupplierController extends Controller
      */
     public function index()
     {
-        $data = DB::table('suppliers')->get();
+
         return view('supplier.supplierDex', compact('data'));
     }
+
+    public function getSupplier()
+    {
+        $data = DB::table('suppliers')->get();
+
+        return Datatables::of($data)
+            ->editColumn('status', function ($data) {
+                if ($data->aktif == 'aktif' ){
+                    return
+                        '<form action="{{ route(\'supp.nonactive\', $d->id) }}" method="post">
+                            @csrf
+                            @method("PUT")
+                            <button onclick="return confirm(\'Nonaktifkan Supplier ?\')" type="submit" class="btn btn-sm btn-success">Aktif</button>
+                        </form>';
+                } else {
+                    return '<button class="btn btn-sm btn-danger">OFF</button>';
+                }
+            })
+            ->addColumn('lihat', function($data) {
+                return "<a class='btn btn-xs btn-success' href='$data->id/detail'>Lihat</a>";
+            })
+            ->rawColumns(['sudah', 'belum', 'lihat'])->make(true);
+    }
+    
 
     /**
      * Show the form for creating a new resource.

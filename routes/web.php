@@ -41,6 +41,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('barang/{id}/view', 'BarangController@show')->name('barang.view');
     Route::post('barang/save/create', 'BarangController@store')->name('barang.save');
     Route::get('barang/create', 'BarangController@create')->name('barang.create');
+    Route::get('barang/get-barang', 'BarangController@getBarang')->name('barang.getBarang');
     Route::get('barang/', 'BarangController@index')->name('barang.index');
     // ROUTE SUPPLIER
     Route::put('supplier/{id}/nonaktif', 'SupplierController@statDeActivated')->name('supp.nonactive');
