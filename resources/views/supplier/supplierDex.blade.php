@@ -40,7 +40,7 @@
                 <div class="card-body">
                     <a href="{{ route('supplier.create') }}" class="btn btn-primary btn-sm" type="button">Tambah Supplier</a>
                     <div class="table-responsive">
-                        <table class="table">
+                        <table class="table" id="supplierTable">
                             <thead class=" text-primary">
                                 <tr>
                                     <th>
@@ -61,41 +61,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($data as $d)
-                                <tr>
-                                    <td> {{$d->kodeSupplier}} </td>
-                                    <td> {{$d->namaSupplier}} </td>
-                                    <td> {{$d->noHP}} </td>
-                                    @can('admin')
-                                        <td class="text-center">
-                                            @if( $d->status == 'aktif')
-                                                <form action="{{ route('supp.nonactive', $d->id) }}" method="post">
-                                                    @csrf
-                                                    @method('PUT')
-                                                    <button onclick="return confirm('Nonaktifkan Supplier ?')" type="submit" class="btn btn-sm btn-success">Aktif</button>
-                                                </form>
-                                            @else
-                                                <form action="{{ route('supp.active', $d->id) }}" method="post" >
-                                                    @csrf
-                                                    @method('PUT')
-                                                    <button onclick="return confirm('Aktifkan Supplier ?')" type="submit" class="btn btn-sm btn-danger">non-aktif</button>
-                                                </form>
-                                            @endif
-                                        </td>
-                                    @endcan
-                                    @can('kasir')
-                                        <td class="text-center">
-                                            @if( $d->status == 'aktif')
-                                                <button class="btn btn-sm btn-success">AKTIF</button>
-                                            @else
-                                                <button class="btn btn-sm btn-danger">NON-AKTIF</button>
-                                            @endif
-                                        </td>
-                                    @endcan
-{{--                                    <td> {{$d->status}} </td>--}}
-                                    <td class="text-center"> <a class="btn btn-info" href="{{route('supplier.show',$d->id)}}">Detail</a> </td>
-                                </tr>
-                                @endforeach
+{{--DATATABLE--}}
                             </tbody>
                         </table>
                     </div>
@@ -105,5 +71,24 @@
     </div>
   </div>
 </div>
+<script src="{{ asset('material/js/core/jquery.min.js') }}"></script>
+<script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+<script>
+    $(function() {
+        $('#supplierTable').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: '{{ route('supp.getSupp') }}',
+            columns: [
+                { data: 'kodeSupplier', name: 'kodeSupplier' },
+                { data: 'namaSupplier', name: 'namaSupplier' },
+                { data: 'noHP', name: 'noHP' },
+                { data: 'status', name: 'status' },
+                { data: 'lihat', name: 'lihat' }
+            ]
+        });
+    });
+</script>
 @endsection
 

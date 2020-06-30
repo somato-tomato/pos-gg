@@ -26,6 +26,7 @@ Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');
 Route::group(['middleware' => 'auth'], function () {
     //ROUTE STOCK BARANG MASUK
     Route::get('barang/{id}/supplier', 'BarangStockController@getSupplier')->name('stock.supp');
+    Route::get('barang/get-stock-kurang', 'BarangStockController@getStockWarn')->name('stock.getStockWarn');
     Route::get('barang/stock-kurang', 'BarangStockController@stockWarn')->name('stock.warn');
     Route::post('barang/tambah', 'BarangStockController@stockAdd')->name('stock.nambah');
     //ROUTE SUPPLIER BARANG
@@ -34,6 +35,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('barang-supplier/update', 'BarangSupplierController@update')->name('bSupplier.update');
     Route::post('barang-supplier/save', 'BarangSupplierController@store')->name('bSupplier.store');
     Route::get('barang-supplier/create', 'BarangSupplierController@create')->name('bSupplier.create');
+    Route::get('barang-supplier/get-barang-supplier', 'BarangSupplierController@getBarangSupplier')->name('bSupplier.getbSupplier');
     Route::get('barang-supplier/', 'BarangSupplierController@index')->name('bSupplier.index');
     //ROUTE BARANG
     Route::put('barang/{id}/update', 'BarangController@update')->name('barang.update');
@@ -46,6 +48,7 @@ Route::group(['middleware' => 'auth'], function () {
     // ROUTE SUPPLIER
     Route::put('supplier/{id}/nonaktif', 'SupplierController@statDeActivated')->name('supp.nonactive');
     Route::put('supplier/{id}/aktif', 'SupplierController@statActivated')->name('supp.active');
+    Route::get('supplier/get-supplier', 'SupplierController@getSupplier')->name('supp.getSupp');
     Route::resource('supplier', 'SupplierController');
 });
 

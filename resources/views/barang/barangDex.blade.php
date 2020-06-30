@@ -61,17 +61,7 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-{{--                                    @foreach ($data as $d)--}}
-{{--                                        <tr>--}}
-{{--                                            <td> {{$d->kodeBarang}} </td>--}}
-{{--                                            <td> {{$d->namaBarang}} </td>--}}
-{{--                                            <td> {{$d->hargaJualSatuan}} </td>--}}
-{{--                                            <td> {{$d->stock}} </td>--}}
-{{--                                            <td class="text-center">--}}
-{{--                                                <a class="btn btn-info btn-sm" href="{{route('barang.view',$d->id)}}">Detail</a>--}}
-{{--                                            </td>--}}
-{{--                                        </tr>--}}
-{{--                                    @endforeach--}}
+{{--DATATABLE--}}
                                     </tbody>
                                 </table>
                             </div>

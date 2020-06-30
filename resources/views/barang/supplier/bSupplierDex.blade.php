@@ -40,7 +40,7 @@
                         <div class="card-body">
                             <a href="{{ route('bSupplier.create') }}" class="btn btn-primary btn-sm" type="button">Tambah Supplier Barang</a>
                             <div class="table-responsive">
-                                <table class="table">
+                                <table class="table" id="bSupplierTable">
                                     <thead class=" text-primary">
                                     <tr>
                                         <th>
@@ -58,66 +58,65 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach ($data as $d)
-                                        <tr>
-                                            <td> {{$d->namaSupplier}} </td>
-                                            <td> {{$d->namaBarang}} </td>
-                                            <td> {{$d->hargaBeli}} </td>
-                                            <td class="text-center">
-                                                <button type="button" class="btn btn-primary btn-sm"
-                                                        data-id="{{ $d->id }}"
-                                                        data-namabarang="{{ $d->namaBarang }}"
-                                                        data-namasupplier="{{ $d->namaSupplier }}"
-                                                        data-hargabeli="{{ $d->hargaBeli }}"
-                                                        data-toggle="modal" data-target="#stockModal">
-                                                    Perbarui
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        <!-- Modal -->
-                                        <div class="modal fade" id="stockModal" tabindex="-1" role="dialog" aria-labelledby="stockModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog" role="document">
-                                                <div class="modal-content">
-                                                    <form method="post" action="{{ route('bSupplier.update') }}" autocomplete="off" class="form-horizontal">
-                                                        @csrf
-{{--                                                        @method('PUT')--}}
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title" id="stockModalLabel">Perbaharui Supplier Barang</h5>
-                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                <span aria-hidden="true">&times;</span>
-                                                            </button>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            <div class="form-group {{ $errors->has('id') ? ' has-danger' : '' }}">
-                                                                <label for="id" class="bmd-label-static">ID BARANG</label>
-                                                                <input type="text" class="form-control id" id="id" name="id">
-                                                            </div>
-                                                            <div class="form-row">
-                                                                <div class="form-group col-md-6">
-                                                                    <label for="id_label_single"> Nama Supplier
-                                                                        <select id="namaSupplier" class="form-control namaSupplier" name="idSupplier"></select>
-                                                                    </label>
-                                                                </div>
-                                                                <div class="form-group col-md-6">
-                                                                    <label for="id_label_single"> Nama Barang
-                                                                        <select id="namaBarang" class="form-control namaBarang" name="idBarang"></select>
-                                                                    </label>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group {{ $errors->has('hargaBeli') ? ' has-danger' : '' }}">
-                                                                <label for="hargaBeli" class="bmd-label-static">Harga dari Supplier</label>
-                                                                <input type="number" class="form-control hargaBeli" id="hargaBeli" name="hargaBeli">
-                                                            </div>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                            <button type="submit" class="btn btn-primary">Save changes</button>
-                                                        </div>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    @endforeach
+{{--                                    @foreach ($data as $d)--}}
+{{--                                        <tr>--}}
+{{--                                            <td> {{$d->namaSupplier}} </td>--}}
+{{--                                            <td> {{$d->namaBarang}} </td>--}}
+{{--                                            <td> {{$d->hargaBeli}} </td>--}}
+{{--                                            <td class="text-center">--}}
+{{--                                                <button type="button" class="btn btn-primary btn-sm"--}}
+{{--                                                        data-id="{{ $d->id }}"--}}
+{{--                                                        data-namabarang="{{ $d->namaBarang }}"--}}
+{{--                                                        data-namasupplier="{{ $d->namaSupplier }}"--}}
+{{--                                                        data-hargabeli="{{ $d->hargaBeli }}"--}}
+{{--                                                        data-toggle="modal" data-target="#stockModal">--}}
+{{--                                                    Perbarui--}}
+{{--                                                </button>--}}
+{{--                                            </td>--}}
+{{--                                        </tr>--}}
+{{--                                    @endforeach--}}
+<div class="modal fade" id="stockModal" tabindex="-1" role="dialog" aria-labelledby="stockModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form method="post" action="{{ route('bSupplier.update') }}" autocomplete="off" class="form-horizontal">
+                @csrf
+                {{--                                                        @method('PUT')--}}
+                <div class="modal-header">
+                    <h5 class="modal-title" id="stockModalLabel">Perbaharui Supplier Barang</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group {{ $errors->has('id') ? ' has-danger' : '' }}">
+                        <label for="id" class="bmd-label-static">ID BARANG</label>
+                        <input type="text" class="form-control id" id="id" name="id">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="id_label_single"> Nama Supplier
+                                <select id="namaSupplier" class="form-control namaSupplier" name="idSupplier"></select>
+                            </label>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="id_label_single"> Nama Barang
+                                <select id="namaBarang" class="form-control namaBarang" name="idBarang"></select>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group {{ $errors->has('hargaBeli') ? ' has-danger' : '' }}">
+                        <label for="hargaBeli" class="bmd-label-static">Harga dari Supplier</label>
+                        <input type="number" class="form-control hargaBeli" id="hargaBeli" name="hargaBeli">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
                                     </tbody>
                                 </table>
                             </div>
@@ -130,6 +129,27 @@
     <script src="{{ asset('material/js/core/jquery.min.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
     <script src="{{ asset('material/js/core/bootstrap-material-design.min.js') }}"></script>
+    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+    <script>
+        $(function() {
+            $('#bSupplierTable').DataTable({
+                processing: true,
+                serverSide: true,
+                columnDefs: [ {
+                    targets: 3,
+                    searchable: false
+                } ],
+                ajax: '{{ route('bSupplier.getbSupplier') }}',
+                columns: [
+                    { data: 'namaSupplier', name: 'suppliers.namaSupplier' },
+                    { data: 'namaBarang', name: 'barangs.namaBarang' },
+                    { data: 'hargaBeli', name: 'hargaBeli' },
+                    { data: 'perbarui', name: 'perbarui' }
+                ]
+            });
+        });
+    </script>
     <script>
         $('#stockModal').on('show.bs.modal', function (event) {
             var button = $(event.relatedTarget)

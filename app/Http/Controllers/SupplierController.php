@@ -18,7 +18,7 @@ class SupplierController extends Controller
     public function index()
     {
 
-        return view('supplier.supplierDex', compact('data'));
+        return view('supplier.supplierDex');
     }
 
     public function getSupplier()
@@ -27,23 +27,32 @@ class SupplierController extends Controller
 
         return Datatables::of($data)
             ->editColumn('status', function ($data) {
-                if ($data->aktif == 'aktif' ){
+                if ($data->status == 'aktif' ){
+                    $csrf = csrf_field();
+                    $method = method_field('PUT');
                     return
-                        '<form action="{{ route(\'supp.nonactive\', $d->id) }}" method="post">
-                            @csrf
-                            @method("PUT")
-                            <button onclick="return confirm(\'Nonaktifkan Supplier ?\')" type="submit" class="btn btn-sm btn-success">Aktif</button>
-                        </form>';
+                        "<form action='".route('supp.nonactive', $data->id)."' method='POST'>
+                            $csrf
+                            $method
+                            <button onclick='return confirm(\"Non-aktifkan Supplier ?\")' type='submit' class='btn btn-sm btn-success'>Aktif</button>
+                        </form>";
                 } else {
-                    return '<button class="btn btn-sm btn-danger">OFF</button>';
+                    $csrf = csrf_field();
+                    $method = method_field('PUT');
+                    return
+                        "<form action='".route('supp.active', $data->id)."' method='POST' >
+                            $csrf
+                            $method
+                            <button onclick='return confirm(\"Aktifkan Supplier ?\")' type='submit' class='btn btn-sm btn-danger'>non-aktif</button>
+                        </form>";
                 }
             })
             ->addColumn('lihat', function($data) {
-                return "<a class='btn btn-xs btn-success' href='$data->id/detail'>Lihat</a>";
+                return '<a class="btn btn-xs btn-success" href="'.route('supplier.show', $data->id).'">Lihat</a>';
             })
-            ->rawColumns(['sudah', 'belum', 'lihat'])->make(true);
+            ->rawColumns(['status', 'lihat'])->make(true);
     }
-    
+
 
     /**
      * Show the form for creating a new resource.

@@ -97,7 +97,7 @@
                             </div>
 
                             <div class="table-responsive">
-                                <table class="table">
+                                <table class="table" id="stockWarnTable">
                                     <thead class=" text-primary">
                                     <tr>
                                         <th>
@@ -115,14 +115,14 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach ($data as $d)
-                                        <tr>
-                                            <td> {{$d->kodeBarang}} </td>
-                                            <td> {{$d->namaBarang}} </td>
-                                            <td> {{$d->stock}} </td>
-                                            <td> {{$d->minStock}} </td>
-                                        </tr>
-                                    @endforeach
+{{--                                    @foreach ($data as $d)--}}
+{{--                                        <tr>--}}
+{{--                                            <td> {{$d->kodeBarang}} </td>--}}
+{{--                                            <td> {{$d->namaBarang}} </td>--}}
+{{--                                            <td> {{$d->stock}} </td>--}}
+{{--                                            <td> {{$d->minStock}} </td>--}}
+{{--                                        </tr>--}}
+{{--                                    @endforeach--}}
                                     </tbody>
                                 </table>
                             </div>
@@ -134,7 +134,22 @@
     </div>
     <script src="{{ asset('material/js/core/jquery.min.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
     <script>
+        $(function() {
+            $('#stockWarnTable').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: '{{ route('stock.getStockWarn') }}',
+                columns: [
+                    { data: 'kodeBarang', name: 'kodeBarang' },
+                    { data: 'namaBarang', name: 'namaBarang' },
+                    { data: 'stock', name: 'stock' },
+                    { data: 'minStock', name: 'minStock' }
+                ]
+            });
+        });
         jQuery(document).ready(function () {
             jQuery('select[name="idBarang"]').on('change', function () {
                 var idSupplier = jQuery(this).val();
@@ -156,27 +171,6 @@
                 }
             });
         });
-        {{--$('#namaBarang').select2({--}}
-        {{--    dropdownParent: $('#stockModal'),--}}
-        {{--    placeholder: 'Masukan Nama Barang',--}}
-        {{--    theme: 'material',--}}
-        {{--    ajax: {--}}
-        {{--        url: '{{ route('bSupplier.loadBarang') }}',--}}
-        {{--        dataType: 'json',--}}
-        {{--        delay: 250,--}}
-        {{--        processResults: function (data) {--}}
-        {{--            return {--}}
-        {{--                results:  $.map(data, function (item) {--}}
-        {{--                    return {--}}
-        {{--                        text: item.namaBarang,--}}
-        {{--                        id: item.id--}}
-        {{--                    }--}}
-        {{--                })--}}
-        {{--            };--}}
-        {{--        },--}}
-        {{--        cache: true--}}
-        {{--    }--}}
-        {{--});--}}
     </script>
 @endsection
 

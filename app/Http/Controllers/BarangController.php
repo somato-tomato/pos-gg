@@ -17,8 +17,7 @@ class BarangController extends Controller
     public function getBarang()
     {
         $data = DB::table('barangs')
-            ->select('id', 'kodeBarang', 'namaBarang','hargaJualSatuan', 'stock')
-            ->get();
+            ->select('id', 'kodeBarang', 'namaBarang','hargaJualSatuan', 'stock');
 
         return Datatables::of($data)
             ->addColumn('lihat', function($data) {

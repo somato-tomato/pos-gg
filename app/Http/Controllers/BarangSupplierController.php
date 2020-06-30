@@ -6,6 +6,7 @@ use App\Barang;
 use App\BarangSupplier;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Yajra\DataTables\DataTables;
 
 class BarangSupplierController extends Controller
 {
@@ -35,13 +36,29 @@ class BarangSupplierController extends Controller
 
     public function index()
     {
+        return view('barang.supplier.bSupplierDex');
+    }
+
+    public function getBarangSupplier()
+    {
         $data = DB::table('barang_suppliers')
             ->join('barangs', 'barang_suppliers.idBarang', '=', 'barangs.id')
             ->join('suppliers', 'barang_suppliers.idSupplier', '=', 'suppliers.id')
-            ->select('barang_suppliers.id', 'barangs.namaBarang', 'suppliers.namaSupplier', 'barang_suppliers.hargaBeli')
-            ->get();
+            ->select('barang_suppliers.id', 'barangs.namaBarang', 'suppliers.namaSupplier', 'barang_suppliers.hargaBeli');
 
-        return view('barang.supplier.bSupplierDex', compact('data'));
+        return Datatables::of($data)
+            ->editColumn('perbarui', function ($data) {
+                return
+                    "<button type='button' class='btn btn-primary btn-sm'
+                        data-id='".$data->id."'
+                        data-namabarang='".$data->namaBarang."'
+                        data-namasupplier='".$data->namaSupplier."'
+                        data-hargabeli='".$data->hargaBeli."'
+                        data-toggle='modal' data-target='#stockModal'>
+                        Perbarui
+                    </button>";
+            })
+            ->rawColumns(['perbarui'])->make(true);
     }
 
     public function create()

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\BarangStock;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Yajra\DataTables\DataTables;
 
 class BarangStockController extends Controller
 {
@@ -23,8 +24,6 @@ class BarangStockController extends Controller
             'keterangan'   =>  $request->keterangan
         );
 
-//        ddd($form_data);
-
         DB::table('barangs')
             ->where('id', '=', $request->idBarang)
             ->increment('stock', $request->stockMasuk);
@@ -36,18 +35,22 @@ class BarangStockController extends Controller
 
     public function stockWarn()
     {
-        $data = DB::table('barangs')
-            ->select('id', 'kodeBarang', 'namaBarang', 'stock', 'minStock')
-            ->whereRaw('stock <= minStock')
-            ->get();
-
         $kurang = DB::table('barangs')
             ->whereRaw('stock <= minStock')
             ->pluck('namaBarang', 'id');
 
         $kurang->prepend('Pilih Barang', '0');
 
-        return view('barang.stock.minStockDex', compact('data', 'kurang'));
+        return view('barang.stock.minStockDex', compact('kurang'));
+    }
+
+    public function getStockWarn()
+    {
+        $data = DB::table('barangs')
+            ->select('id', 'kodeBarang', 'namaBarang', 'stock', 'minStock')
+            ->whereRaw('stock <= minStock');
+
+        return Datatables::of($data)->make(true);
     }
 
     public function getSupplier($id)
