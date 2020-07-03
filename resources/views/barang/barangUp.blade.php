@@ -29,23 +29,23 @@
 {{--                                </div>--}}
 
                                 <div class="form-row">
-                                    <div class="form-group {{ $errors->has('kodeBarang') ? ' has-danger' : '' }} col-md-4">
+                                    <div class="form-group {{ $errors->has('kodeBarang') ? ' has-danger' : '' }} col-md-6">
                                         <label for="kodeBarang" class="bmd-label-static">Kode Barang</label>
                                         <input type="text" class="form-control {{ $errors->has('kodeBarang') ? ' is-invalid' : '' }}" id="kodeBarang" name="kodeBarang" value="{{ $data->kodeBarang }}" readonly>
                                         <small id="KSHelp" class="form-text text-muted">Diisi dengan Kode Barang</small>
                                     </div>
 
-                                    <div class="form-group {{ $errors->has('namaBarang') ? ' has-danger' : '' }} col-md-4">
+                                    <div class="form-group {{ $errors->has('namaBarang') ? ' has-danger' : '' }} col-md-6">
                                         <label for="namaBarang" class="bmd-label-static">Nama Barang</label>
                                         <input type="text" class="form-control {{ $errors->has('namaBarang') ? ' is-invalid' : '' }}" id="namaBarang" name="namaBarang" value="{{ $data->namaBarang }}">
                                         <small id="KSHelp" class="form-text text-muted">Diisi dengan Nama Barang</small>
                                     </div>
 
-                                    <div class="form-group {{ $errors->has('kategori') ? ' has-danger' : '' }} col-md-4">
-                                        <label for="kategori" class="bmd-label-static">Kategori</label>
-                                        <input type="text" class="form-control {{ $errors->has('kategori') ? ' is-invalid' : '' }}" id="kategori" name="kategori" value="{{ $data->kategori }}">
-                                        <small id="KSHelp" class="form-text text-muted">Diisi dengan Kategori dari Barang</small>
-                                    </div>
+{{--                                    <div class="form-group {{ $errors->has('kategori') ? ' has-danger' : '' }} col-md-4">--}}
+{{--                                        <label for="kategori" class="bmd-label-static">Kategori</label>--}}
+{{--                                        <input type="text" class="form-control {{ $errors->has('kategori') ? ' is-invalid' : '' }}" id="kategori" name="kategori" value="{{ $data->kategori }}">--}}
+{{--                                        <small id="KSHelp" class="form-text text-muted">Diisi dengan Kategori dari Barang</small>--}}
+{{--                                    </div>--}}
                                 </div>
 
                                 <div class="form-row">

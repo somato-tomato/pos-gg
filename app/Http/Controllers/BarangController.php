@@ -36,7 +36,6 @@ class BarangController extends Controller
         $request->validate([
             'kodeBarang' => 'required|unique:barangs',
             'namaBarang' =>  'required',
-            'kategori'   =>  'required',
             'satuan' =>  'required',
             'hargaJualSatuan' => 'required',
             'stock' => 'required',
@@ -47,7 +46,6 @@ class BarangController extends Controller
         $form_data = array(
             'kodeBarang' =>  $request->kodeBarang,
             'namaBarang'     =>  $request->namaBarang,
-            'kategori'   =>  $request->kategori,
             'satuan' => $request->satuan,
             'hargaJualSatuan' => $request->hargaJualSatuan,
             'stock' => $request->stock,
@@ -78,7 +76,6 @@ class BarangController extends Controller
         $request->validate([
             'kodeBarang' => 'required',
             'namaBarang' =>  'required',
-            'kategori'   =>  'required',
             'satuan' =>  'required',
             'hargaJualSatuan' => 'required',
             'stock' => 'required',
@@ -89,7 +86,6 @@ class BarangController extends Controller
         $form_data = array(
             'kodeBarang' =>  $request->kodeBarang,
             'namaBarang'     =>  $request->namaBarang,
-            'kategori'   =>  $request->kategori,
             'satuan' => $request->satuan,
             'hargaJualSatuan' => $request->hargaJualSatuan,
             'stock' => $request->stock,
