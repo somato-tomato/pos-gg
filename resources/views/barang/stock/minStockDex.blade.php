@@ -115,14 +115,7 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-{{--                                    @foreach ($data as $d)--}}
-{{--                                        <tr>--}}
-{{--                                            <td> {{$d->kodeBarang}} </td>--}}
-{{--                                            <td> {{$d->namaBarang}} </td>--}}
-{{--                                            <td> {{$d->stock}} </td>--}}
-{{--                                            <td> {{$d->minStock}} </td>--}}
-{{--                                        </tr>--}}
-{{--                                    @endforeach--}}
+
                                     </tbody>
                                 </table>
                             </div>

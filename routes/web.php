@@ -24,11 +24,6 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');
 
 Route::group(['middleware' => 'auth'], function () {
-    //ROUTE STOCK BARANG MASUK
-    Route::get('barang/{id}/supplier', 'BarangStockController@getSupplier')->name('stock.supp');
-    Route::get('barang/get-stock-kurang', 'BarangStockController@getStockWarn')->name('stock.getStockWarn');
-    Route::get('barang/stock-kurang', 'BarangStockController@stockWarn')->name('stock.warn');
-    Route::post('barang/tambah', 'BarangStockController@stockAdd')->name('stock.nambah');
     //ROUTE SUPPLIER BARANG
     Route::get('barang-supplier/list-barang', 'BarangSupplierController@loadBarang')->name('bSupplier.loadBarang');
     Route::get('barang-supplier/list-supplier', 'BarangSupplierController@loadSupplier')->name('bSupplier.loadSupplier');
@@ -37,6 +32,19 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('barang-supplier/create', 'BarangSupplierController@create')->name('bSupplier.create');
     Route::get('barang-supplier/get-barang-supplier', 'BarangSupplierController@getBarangSupplier')->name('bSupplier.getbSupplier');
     Route::get('barang-supplier/', 'BarangSupplierController@index')->name('bSupplier.index');
+    //ROUTE STOCK BARANG MASUK
+    Route::get('barang/{id}/supplier', 'BarangStockController@getSupplier')->name('stock.supp');
+    Route::get('barang/get-stock-kurang', 'BarangStockController@getStockWarn')->name('stock.getStockWarn');
+    Route::get('barang/stock-kurang', 'BarangStockController@stockWarn')->name('stock.warn');
+    Route::post('barang/tambah', 'BarangStockController@stockAdd')->name('stock.nambah');
+    //ROUTE RAK
+    Route::get('barang/rak/store', 'KategoriRakController@rakStore')->name('rak.store');
+    Route::get('barang/rak/get-rak', 'KategoriRakController@getRak')->name('rak.getRak');
+    Route::get('barang/rak', 'KategoriRakController@rakDex')->name('rak.dex');
+    //ROUTE KATEGORI
+    Route::get('barang/kateogir/store', 'KategoriRakController@kategoriStore')->name('kategori.store');
+    Route::get('barang/kategori/get-kategori', 'KategoriRakController@getKategori')->name('kategori.getKategori');
+    Route::get('barang/kategori', 'KategoriRakController@kategoriDex')->name('kategori.dex');
     //ROUTE BARANG
     Route::put('barang/{id}/update', 'BarangController@update')->name('barang.update');
     Route::get('barang/{id}/edit', 'BarangController@edit')->name('barang.edit');
