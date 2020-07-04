@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\BarangRak;
 use App\Kategori;
 use App\Rak;
 use Illuminate\Http\Request;
@@ -55,7 +56,7 @@ class KategoriRakController extends Controller
     public function getRak()
     {
         $data = DB::table('raks')
-            ->join('barang_raks', 'raks.id', '=', 'barang_raks.idBarang')
+            ->join('barang_raks', 'raks.id', '=', 'barang_raks.idRak')
             ->join('barangs', 'barang_raks.idBarang', '=', 'barangs.id')
             ->select('barangs.kodeBarang', 'barangs.namaBarang', 'raks.namaRak');
 
@@ -87,6 +88,23 @@ class KategoriRakController extends Controller
         Rak::create($form_data);
 
         return back()->with('message', 'Rak berhasil ditambahkan!');
+    }
+
+    public function rakBarangStore(Request $request)
+    {
+        $request->validate([
+            'idRak' => 'required',
+            'idBarang' => 'required'
+        ]);
+
+        $form_data = array(
+            'idRak' => $request->idRak,
+            'idBarang' => $request->idBarang
+        );
+
+        BarangRak::create($form_data);
+
+        return back()->with('message', 'Barang berhasil ditambahkan ke Rak Barang!');
     }
 
 }

@@ -87,7 +87,7 @@
                             <div class="modal fade" id="rakBarangModal" tabindex="-1" role="dialog" aria-labelledby="stockModalLabel" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
-                                        <form method="post" action="{{ route('rak.store') }}" autocomplete="off" class="form-horizontal">
+                                        <form method="post" action="{{ route('rak.storeRakBarang') }}" autocomplete="off" class="form-horizontal">
                                             @csrf
                                             <div class="modal-header">
                                                 <h5 class="modal-title" id="stockModalLabel">Tambah Rak</h5>
@@ -98,15 +98,15 @@
                                             <div class="modal-body">
                                                 <div class="form-row">
                                                     <div class="form-group col-md-6">
-                                                        <label for="pilihNamaRak">Nama Barang</label>
-                                                        <select id="pilihNamaRak" name="namaRak" class="form-control">
+                                                        <label for="pilihNamaRak">Pilih Posisi Rak</label>
+                                                        <select id="pilihNamaRak" name="idRak" class="form-control">
 
                                                         </select>
                                                     </div>
 
                                                     <div class="form-group col-md-6">
-                                                        <label for="namaBarang">Nama Barang</label>
-                                                        <select id="namaBarang" name="namaBarang" class="form-control">
+                                                        <label for="pilihNamaBarang">Nama Barang</label>
+                                                        <select id="pilihNamaBarang" name="idBarang" class="form-control">
 
                                                         </select>
                                                     </div>
@@ -179,19 +179,40 @@
                 ]
             });
         });
-        $('#namaSupplier').select2({
-            dropdownParent: $('#stockModal'),
-            placeholder: 'Masukan Nama Supplier',
+        $('#pilihNamaRak').select2({
+            dropdownParent: $('#rakBarangModal'),
+            placeholder: 'Masukan Nama Rak',
             theme: 'material',
             ajax: {
-                url: '{{ route('bSupplier.loadSupplier') }}',
+                url: '{{ route('rak.getList') }}',
                 dataType: 'json',
                 delay: 250,
                 processResults: function (data) {
                     return {
                         results:  $.map(data, function (item) {
                             return {
-                                text: item.namaSupplier,
+                                text: item.namaRak,
+                                id: item.id
+                            }
+                        })
+                    };
+                },
+                cache: true
+            }
+        });
+        $('#pilihNamaBarang').select2({
+            dropdownParent: $('#rakBarangModal'),
+            placeholder: 'Masukan Nama Barang',
+            theme: 'material',
+            ajax: {
+                url: '{{ route('bSupplier.loadBarang') }}',
+                dataType: 'json',
+                delay: 250,
+                processResults: function (data) {
+                    return {
+                        results:  $.map(data, function (item) {
+                            return {
+                                text: item.namaBarang,
                                 id: item.id
                             }
                         })
