@@ -28,12 +28,16 @@ class BarangController extends Controller
 
     public function create()
     {
-        return view('barang.barangAdd');
+        $kategori = DB::table('kategoris')->pluck('namaKategori', 'id');
+        $kategori->prepend('Pilih Kategori Barang','1');
+
+        return view('barang.barangAdd', compact('kategori'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
+            'idKategori' => 'required',
             'kodeBarang' => 'required|unique:barangs',
             'namaBarang' =>  'required',
             'satuan' =>  'required',
@@ -44,6 +48,7 @@ class BarangController extends Controller
         ]);
 
         $form_data = array(
+            'idKategori' => $request->idKategori,
             'kodeBarang' =>  $request->kodeBarang,
             'namaBarang'     =>  $request->namaBarang,
             'satuan' => $request->satuan,
@@ -61,19 +66,27 @@ class BarangController extends Controller
     public function show($id)
     {
         $data = Barang::findOrFail($id);
+        $kategori = DB::table('barangs')
+            ->join('kategoris', 'barangs.idKategori', '=', 'kategoris.id')
+            ->select('kategoris.namaKategori')
+            ->where('barangs.id', '=', $id)
+            ->first();
 
-        return view('barang.barangView', compact('data'));
+        return view('barang.barangView', compact('data','kategori'));
     }
 
     public function edit($id)
     {
         $data = Barang::findOrFail($id);
-        return view('barang.barangUp', compact('data'));
+        $kategori = DB::table('kategoris')->pluck('namaKategori', 'id');
+        $kategori->prepend('Pilih Kategori Barang','1');
+        return view('barang.barangUp', compact('data', 'kategori'));
     }
 
     public function update(Request $request, $id)
     {
         $request->validate([
+            'idKategori' => 'required',
             'kodeBarang' => 'required',
             'namaBarang' =>  'required',
             'satuan' =>  'required',
@@ -84,6 +97,7 @@ class BarangController extends Controller
         ]);
 
         $form_data = array(
+            'idKategori' => $request->idKategori,
             'kodeBarang' =>  $request->kodeBarang,
             'namaBarang'     =>  $request->namaBarang,
             'satuan' => $request->satuan,

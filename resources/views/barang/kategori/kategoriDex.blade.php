@@ -63,6 +63,21 @@
                                                 <button type="submit" class="btn btn-primary">Save changes</button>
                                             </div>
                                         </form>
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered">
+                                                <tbody>
+                                                @forelse($kategori as $k)
+                                                    <tr>
+                                                        <td>{{$k->namaKategori}}</td>
+                                                    </tr>
+                                                @empty
+                                                    <tr>
+                                                        <td>GG</td>
+                                                    </tr>
+                                                @endforelse
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -72,11 +87,14 @@
                                     <thead class=" text-primary">
                                     <tr>
                                         <th>
-                                            Nama Kategori
+                                            Kode Barang
                                         </th>
-{{--                                        <th>--}}
-{{--                                            Jumlah Barang dalam Kategori--}}
-{{--                                        </th>--}}
+                                        <th>
+                                            Nama Barang
+                                        </th>
+                                        <th>
+                                            Kategori
+                                        </th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -98,9 +116,11 @@
             $('#barangTable').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: '{{ route('barang.getBarang') }}',
+                ajax: '{{ route('kategori.getKategori') }}',
                 columns: [
-                    { data: 'namaKategori', name: 'namaKategori' }
+                    { data: 'kodeBarang', name: 'barangs.kodeBarang' },
+                    { data: 'namaBarang', name: 'barangs.namaBarang' },
+                    { data: 'namaKategori', name: 'kategoris.namaKategori' }
                 ]
             });
         });

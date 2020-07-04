@@ -38,11 +38,12 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('barang/stock-kurang', 'BarangStockController@stockWarn')->name('stock.warn');
     Route::post('barang/tambah', 'BarangStockController@stockAdd')->name('stock.nambah');
     //ROUTE RAK
-    Route::get('barang/rak/store', 'KategoriRakController@rakStore')->name('rak.store');
+    Route::get('barang/rak/list-rak', 'KategoriRakController@getListRak')->name('rak.getList');
+    Route::post('barang/rak/store', 'KategoriRakController@rakStore')->name('rak.store');
     Route::get('barang/rak/get-rak', 'KategoriRakController@getRak')->name('rak.getRak');
     Route::get('barang/rak', 'KategoriRakController@rakDex')->name('rak.dex');
     //ROUTE KATEGORI
-    Route::get('barang/kateogir/store', 'KategoriRakController@kategoriStore')->name('kategori.store');
+    Route::post('barang/kategori/store', 'KategoriRakController@kategoriStore')->name('kategori.store');
     Route::get('barang/kategori/get-kategori', 'KategoriRakController@getKategori')->name('kategori.getKategori');
     Route::get('barang/kategori', 'KategoriRakController@kategoriDex')->name('kategori.dex');
     //ROUTE BARANG

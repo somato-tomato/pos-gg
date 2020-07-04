@@ -29,6 +29,18 @@
                 <p>{{ __('Barang') }}</p>
             </a>
         </li>
+        <li class="nav-item{{ $activePage == 'kategori' ? ' active' : '' }}">
+            <a class="nav-link" href="{{ route('kategori.dex') }}">
+                <i class="material-icons">content_paste</i>
+                <p>{{ __('Kategori') }}</p>
+            </a>
+        </li>
+        <li class="nav-item{{ $activePage == 'rak' ? ' active' : '' }}">
+            <a class="nav-link" href="{{ route('rak.dex') }}">
+                <i class="material-icons">content_paste</i>
+                <p>{{ __('Rak Barang') }}</p>
+            </a>
+        </li>
         <li class="nav-item{{ $activePage == 'barangSup' ? ' active' : '' }}">
             <a class="nav-link" href="{{ route('bSupplier.index') }}">
                 <i class="material-icons">content_paste</i>

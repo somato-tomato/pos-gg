@@ -20,16 +20,24 @@
                                 </div>
 
                                 <div class="form-row">
-                                    <div class="form-group {{ $errors->has('kodeBarang') ? ' has-danger' : '' }} col-md-6">
+                                    <div class="form-group {{ $errors->has('kodeBarang') ? ' has-danger' : '' }} col-md-4">
                                         <label for="kodeBarang" class="bmd-label-static">Kode Barang</label>
                                         <input type="text" class="form-control {{ $errors->has('kodeBarang') ? ' is-invalid' : '' }}" id="kodeBarang" name="kodeBarang">
                                         <small id="KSHelp" class="form-text text-muted">Diisi dengan Kode Barang</small>
                                     </div>
 
-                                    <div class="form-group {{ $errors->has('namaBarang') ? ' has-danger' : '' }} col-md-6">
+                                    <div class="form-group {{ $errors->has('namaBarang') ? ' has-danger' : '' }} col-md-4">
                                         <label for="namaBarang" class="bmd-label-static">Nama Barang</label>
                                         <input type="text" class="form-control {{ $errors->has('namaBarang') ? ' is-invalid' : '' }}" id="namaBarang" name="namaBarang">
                                         <small id="KSHelp" class="form-text text-muted">Diisi dengan Nama Barang</small>
+                                    </div>
+
+                                    <div class="form-group col-md-4">
+                                        <select id="kategori" name="idKategori" class="form-control">
+                                            @foreach( $kategori as $value => $key)
+                                                <option value="{{ $value }}">{{ $key }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
 
 {{--                                    <div class="form-group {{ $errors->has('kategori') ? ' has-danger' : '' }} col-md-4">--}}
