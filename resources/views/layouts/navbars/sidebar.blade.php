@@ -53,6 +53,12 @@
                 <p>{{ __('Stock Kurang') }}</p>
             </a>
         </li>
+        <li class="nav-item{{ $activePage == 'order' ? ' active' : '' }}">
+            <a class="nav-link" href="{{ route('trans.dex') }}">
+                <i class="material-icons">content_paste</i>
+                <p>{{ __('Transaksi') }}</p>
+            </a>
+        </li>
     </ul>
   </div>
 </div>
