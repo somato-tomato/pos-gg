@@ -17660,8 +17660,6 @@ new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
     },
     shoppingCart: [],
     submitCart: false,
-    // formCustomer: false,
-    // resultStatus: false,
     submitForm: false,
     errorMessage: '',
     message: ''
@@ -17680,6 +17678,9 @@ new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
       width: '100%'
     }).on('change', function () {
       _this.cart.barang_id = $('#barang_id').val();
+    });
+    $('#qty').on('keyup', function () {
+      _this.cart.qty = $('#qty').val();
     });
     this.getCart();
   },
@@ -17745,6 +17746,46 @@ new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
         if (result.value) {
           axios__WEBPACK_IMPORTED_MODULE_1___default.a["delete"]("/api/cart/".concat(id)).then(function (response) {
             _this5.getCart();
+          })["catch"](function (error) {
+            console.log(error);
+          });
+        }
+      });
+    },
+    sendOrder: function sendOrder() {
+      var _this6 = this;
+
+      this.errorMessage = '';
+      this.message = '';
+      this.$swal({
+        title: 'Kamu Yakin?',
+        text: 'Kamu Tidak Dapat Mengembalikan Tindakan Ini!',
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Iya, Lanjutkan!',
+        cancelButtonText: 'Tidak, Batalkan!',
+        showCloseButton: true,
+        showLoaderOnConfirm: true,
+        preConfirm: function preConfirm() {
+          return new Promise(function (resolve) {
+            setTimeout(function () {
+              resolve();
+            }, 2000);
+          });
+        },
+        allowOutsideClick: function allowOutsideClick() {
+          return !_this6.$swal.isLoading();
+        }
+      }).then(function (result) {
+        if (result.value) {
+          _this6.submitForm = true;
+          axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/transaksi/checkout').then(function (response) {
+            setTimeout(function () {
+              _this6.getCart();
+
+              _this6.message = response.data.message;
+              _this6.submitForm = false;
+            }, 1000);
           })["catch"](function (error) {
             console.log(error);
           });

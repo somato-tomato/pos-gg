@@ -50,7 +50,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="qty">Qty</label>
-                                    <input type="text" name="qty" id="qty" value="1" min="1" class="form-control">
+                                    <input type="number" name="qty" id="qty" min="1" class="form-control">
                                 </div>
                                 <button class="btn btn-primary btn-sm" :disabled="submitCart">
                                     <i class="fa fa-shopping-cart"></i> @{{ submitCart ? 'Loading...':'Ke Keranjang' }}
@@ -123,6 +123,19 @@
                                 </tr>
                                 </tbody>
                             </table>
+                        </div>
+                        <div class="card-footer text-muted">
+                            <!-- JIKA VALUE DARI errorMessage ada, maka alert danger akan ditampilkan -->
+                            <div v-if="errorMessage" class="alert alert-danger">
+                                @{{ errorMessage }}
+                            </div>
+                            <!-- JIKA TOMBOL DITEKAN MAKA AKAN MEMANGGIL METHOD sendOrder -->
+                            <button class="btn btn-primary btn-sm float-right"
+                                    :disabled="submitForm"
+                                    @click.prevent="sendOrder"
+                            >
+                                @{{ submitForm ? 'Loading...':'Order Now' }}
+                            </button>
                         </div>
                     </div>
                 </div>

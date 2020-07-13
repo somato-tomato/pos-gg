@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Barang;
+use App\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
@@ -27,31 +29,23 @@ class OrderController extends Controller
             'qty' => 'required'
         ]);
 
-        //mengambil data product berdasarkan id
         $barang = Barang::findOrFail($request->barang_id);
-        //mengambil cookie cart dengan $request->cookie('cart')
         $getCart = json_decode($request->cookie('cart'), true);
 
-        //jika datanya ada
         if ($getCart) {
-            //jika key nya exists berdasarkan product_id
             if (array_key_exists($request->barang_id, $getCart)) {
-                //jumlahkan qty barangnya
                 $getCart[$request->barang_id]['qty'] += $request->qty;
-                //dikirim kembali untuk disimpan ke cookie
                 return response()->json($getCart, 200)
                     ->cookie('cart', json_encode($getCart), 120);
             }
         }
 
-        //jika cart kosong, maka tambahkan cart baru
         $getCart[$request->barang_id] = [
             'kodeBarang' => $barang->kodeBarang,
             'namaBarang' => $barang->namaBarang,
             'hargaJualSatuan' => $barang->hargaJualSatuan,
             'qty' => $request->qty
         ];
-        //kirim responsenya kemudian simpan ke cookie
         return response()->json($getCart, 200)
             ->cookie('cart', json_encode($getCart), 120);
     }
@@ -65,9 +59,52 @@ class OrderController extends Controller
     public function removeCart($id)
     {
         $cart = json_decode(request()->cookie('cart'), true);
-        //menghapus cart berdasarkan product_id
         unset($cart[$id]);
-        //cart diperbaharui
         return response()->json($cart, 200)->cookie('cart', json_encode($cart), 120);
+    }
+
+    public function storeOrder(Request $request)
+    {
+        $invoice = Order::selectRaw('LPAD(CONVERT(COUNT("id") + 1, char(5)) , 5,"0") as invoice')->first();
+        $code_invoice = date('Ym').'/INV/'.$invoice->invoice;
+        $cart = json_decode($request->cookie('cart'), true);
+        $result = collect($cart)->map(function($value) {
+            return [
+                'kodeBarang' => $value['kodeBarang'],
+                'namaBarang' => $value['namaBarang'],
+                'qty' => $value['qty'],
+                'hargaJualSatuan' => $value['hargaJualSatuan'],
+                'result' => $value['hargaJualSatuan'] * $value['qty']
+            ];
+        })->all();
+
+        DB::beginTransaction();
+        try {
+            $order = Order::create([
+                'invoice' => $code_invoice,
+                'idUser' => auth()->user()->id,
+                'total' => array_sum(array_column($result, 'result'))
+            ]);
+
+            foreach ($result as $key => $row) {
+                $order->order_detail()->create([
+                    'idBarang' => $key,
+                    'qty' => $row['qty'],
+                    'hargaJualSatuan' => $row['hargaJualSatuan']
+                ]);
+            }
+            DB::commit();
+
+            return response()->json([
+                'status' => 'success',
+                'message' => $order->invoice,
+            ], 200)->cookie(Cookie::forget('cart'));
+        } catch (\Exception $e) {
+            DB::rollback();
+            return response()->json([
+                'status' => 'failed',
+                'message' => $e->getMessage()
+            ], 400);
+        }
     }
 }

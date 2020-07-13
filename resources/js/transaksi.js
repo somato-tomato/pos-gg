@@ -21,8 +21,6 @@ new Vue({
         },
         shoppingCart: [],
         submitCart: false,
-        // formCustomer: false,
-        // resultStatus: false,
         submitForm: false,
         errorMessage: '',
         message: ''
@@ -40,6 +38,9 @@ new Vue({
         }).on('change', () => {
             this.cart.barang_id = $('#barang_id').val();
         });
+        $('#qty').on('keyup', () => {
+            this.cart.qty = $('#qty').val();
+        })
         this.getCart()
     },
     methods: {
@@ -102,6 +103,43 @@ new Vue({
                         })
                         .catch ((error) => {
                             console.log(error);
+                        })
+                }
+            })
+        },
+        sendOrder() {
+            this.errorMessage = ''
+            this.message = ''
+            this.$swal({
+                title: 'Kamu Yakin?',
+                text: 'Kamu Tidak Dapat Mengembalikan Tindakan Ini!',
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Iya, Lanjutkan!',
+                cancelButtonText: 'Tidak, Batalkan!',
+                showCloseButton: true,
+                showLoaderOnConfirm: true,
+                preConfirm: () => {
+                    return new Promise((resolve) => {
+                        setTimeout(() => {
+                            resolve()
+                        }, 2000)
+                    })
+                },
+                allowOutsideClick: () => !this.$swal.isLoading()
+            }).then ((result) => {
+                if (result.value) {
+                    this.submitForm = true
+                    axios.post('/transaksi/checkout')
+                        .then((response) => {
+                            setTimeout(() => {
+                                this.getCart();
+                                this.message = response.data.message
+                                this.submitForm = false
+                            }, 1000)
+                        })
+                        .catch((error) => {
+                            console.log(error)
                         })
                 }
             })
