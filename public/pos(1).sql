@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 13 Jul 2020 pada 10.14
+-- Waktu pembuatan: 19 Jul 2020 pada 09.23
 -- Versi server: 10.1.37-MariaDB
 -- Versi PHP: 7.3.1
 
@@ -192,7 +192,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (12, '2020_06_30_235834_create_raks_table', 3),
 (13, '2020_06_30_235932_create_barang_kategoris_table', 3),
 (14, '2020_07_05_231956_create_orders_table', 4),
-(15, '2020_07_05_232116_create_order_details_table', 4);
+(15, '2020_07_05_232116_create_order_details_table', 4),
+(16, '2020_07_18_010532_create_order_carts_table', 5);
 
 -- --------------------------------------------------------
 
@@ -205,6 +206,7 @@ CREATE TABLE `orders` (
   `idUser` bigint(20) NOT NULL,
   `invoice` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `total` int(11) DEFAULT NULL,
+  `bayar` int(11) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -213,8 +215,35 @@ CREATE TABLE `orders` (
 -- Dumping data untuk tabel `orders`
 --
 
-INSERT INTO `orders` (`id`, `idUser`, `invoice`, `total`, `created_at`, `updated_at`) VALUES
-(1, 1, '202007/INV/00001', 12500, '2020-07-12 21:55:35', '2020-07-12 21:55:35');
+INSERT INTO `orders` (`id`, `idUser`, `invoice`, `total`, `bayar`, `created_at`, `updated_at`) VALUES
+(1, 1, '202007-INV-00003', 44000, 44000, '2020-07-18 23:23:47', '2020-07-18 23:23:47');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `order_carts`
+--
+
+CREATE TABLE `order_carts` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `idOrder` bigint(20) NOT NULL,
+  `idBarang` bigint(20) NOT NULL,
+  `qty` int(11) NOT NULL,
+  `hargaBarang` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data untuk tabel `order_carts`
+--
+
+INSERT INTO `order_carts` (`id`, `idOrder`, `idBarang`, `qty`, `hargaBarang`, `created_at`, `updated_at`) VALUES
+(1, 4, 1, 5, 5000, '2020-07-18 19:15:15', '2020-07-18 19:16:07'),
+(2, 4, 5, 2, 5000, '2020-07-18 19:16:25', '2020-07-18 19:16:25'),
+(3, 1, 5, 13, 30000, '2020-07-18 23:27:34', '2020-07-19 00:09:13'),
+(4, 1, 3, 2, 2000, '2020-07-18 23:56:34', '2020-07-18 23:56:34'),
+(5, 1, 1, 12, 12000, '2020-07-19 00:11:01', '2020-07-19 00:11:01');
 
 -- --------------------------------------------------------
 
@@ -231,14 +260,6 @@ CREATE TABLE `order_details` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data untuk tabel `order_details`
---
-
-INSERT INTO `order_details` (`id`, `idOrder`, `idBarang`, `qty`, `hargaJualSatuan`, `created_at`, `updated_at`) VALUES
-(1, 1, 3, 10, 1000, '2020-07-12 21:55:36', '2020-07-12 21:55:36'),
-(2, 1, 5, 1, 2500, '2020-07-12 21:55:36', '2020-07-12 21:55:36');
 
 -- --------------------------------------------------------
 
@@ -377,6 +398,12 @@ ALTER TABLE `orders`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indeks untuk tabel `order_carts`
+--
+ALTER TABLE `order_carts`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indeks untuk tabel `order_details`
 --
 ALTER TABLE `order_details`
@@ -451,7 +478,7 @@ ALTER TABLE `kategoris`
 -- AUTO_INCREMENT untuk tabel `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT untuk tabel `orders`
@@ -460,10 +487,16 @@ ALTER TABLE `orders`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT untuk tabel `order_carts`
+--
+ALTER TABLE `order_carts`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
 -- AUTO_INCREMENT untuk tabel `order_details`
 --
 ALTER TABLE `order_details`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT untuk tabel `raks`
