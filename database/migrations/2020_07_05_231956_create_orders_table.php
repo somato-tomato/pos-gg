@@ -17,8 +17,8 @@ class CreateOrdersTable extends Migration
             $table->id();
             $table->bigInteger('idUser');
             $table->string('invoice');
-            $table->integer('total');
-            $table->integer('bayar');
+            $table->integer('total')->nullable();
+            $table->integer('bayar')->nullable();
             $table->timestamps();
         });
     }
