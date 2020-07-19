@@ -24,6 +24,12 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');
 
 Route::group(['middleware' => 'auth'], function () {
+    //ROUTE ORDER / TRANSAKSI NO JS
+    Route::put('noJS/order/{id}/process', 'OrderDbController@bayarOrder')->name('noJS.order');
+    Route::post('noJS/save-cart', 'OrderDbController@storeCart')->name('noJS.cart');
+    Route::get('noJS/{invoice}', 'OrderDbController@second')->name('noJS.second');
+    Route::post('noJS/save-invoice', 'OrderDbController@createInvoice')->name('noJS.invoice');
+    Route::get('noJS/', 'OrderDbController@first')->name('noJS.first');
     //ROUTE ORDER / TRANSAKSI
     Route::post('transaksi/checkout', 'OrderController@storeOrder')->name('trans.order');
     Route::get('transaksi/', 'OrderController@orderAdd')->name('trans.dex');

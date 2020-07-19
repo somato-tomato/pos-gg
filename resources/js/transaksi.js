@@ -20,6 +20,13 @@ new Vue({
             qty: ''
         },
         shoppingCart: [],
+        computed: {
+            total() {
+                return this.cart.reduce((total, item, n) => {
+                    return Number(total) + (Number(item.shoppingCart.hargaJualSatuan) * item.shoppingCart.qty[n]);
+                }, 0);
+            }
+        },
         submitCart: false,
         submitForm: false,
         errorMessage: '',

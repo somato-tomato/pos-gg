@@ -59,6 +59,12 @@
                 <p>{{ __('Transaksi') }}</p>
             </a>
         </li>
+        <li class="nav-item{{ $activePage == 'nojs' ? ' active' : '' }}">
+            <a class="nav-link" href="{{ route('noJS.first') }}">
+                <i class="material-icons">content_paste</i>
+                <p>{{ __('Transaksi NO JS') }}</p>
+            </a>
+        </li>
     </ul>
   </div>
 </div>

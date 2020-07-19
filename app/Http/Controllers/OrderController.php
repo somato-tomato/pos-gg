@@ -44,7 +44,8 @@ class OrderController extends Controller
             'kodeBarang' => $barang->kodeBarang,
             'namaBarang' => $barang->namaBarang,
             'hargaJualSatuan' => $barang->hargaJualSatuan,
-            'qty' => $request->qty
+            'qty' => $request->qty,
+            'jumlah' => $barang->hargaJualSatuan * $request->qty
         ];
         return response()->json($getCart, 200)
             ->cookie('cart', json_encode($getCart), 120);
@@ -54,6 +55,11 @@ class OrderController extends Controller
     {
         $cart = json_decode(request()->cookie('cart'), true);
         return response()->json($cart, 200);
+    }
+
+    public function getTotal()
+    {
+
     }
 
     public function removeCart($id)

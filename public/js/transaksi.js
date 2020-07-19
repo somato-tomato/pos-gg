@@ -17659,6 +17659,13 @@ new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
       qty: ''
     },
     shoppingCart: [],
+    computed: {
+      total: function total() {
+        return this.cart.reduce(function (total, item, n) {
+          return Number(total) + Number(item.shoppingCart.hargaJualSatuan) * item.shoppingCart.qty[n];
+        }, 0);
+      }
+    },
     submitCart: false,
     submitForm: false,
     errorMessage: '',
