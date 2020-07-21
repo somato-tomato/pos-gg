@@ -109,7 +109,7 @@ class OrderDbController extends Controller
             ->update(['total' => $total]);
 
         $totalHarga = DB::table('orders')
-            ->select('total')
+            ->select('total', 'invoice')
             ->where('id', '=', $id)
             ->first();
 
@@ -127,8 +127,27 @@ class OrderDbController extends Controller
 
             $kembali = $request->bayar - $totalHarga->total;
 
-            return redirect()->route('noJS.first')->with('message', 'KEMBALIANNYA RP.'.$kembali.',- TERIMA KASIH');
+            return redirect()->route('noJS.kwitansi', $totalHarga->invoice)->with('message', 'TERIMA KASIH TELAH BERBELANJA DI TOKO KAMI');
         }
+    }
+
+    public function kwitansi($invoice)
+    {
+        $list = DB::table('order_carts')
+            ->join('orders', 'order_carts.idOrder', '=', 'orders.id')
+            ->join('barangs', 'order_carts.idBarang', '=', 'barangs.id')
+            ->select('barangs.namaBarang', 'barangs.hargaJualSatuan', 'order_carts.qty', 'order_carts.hargaBarang')
+            ->where('orders.invoice', '=', $invoice)
+            ->get();
+
+        $order = DB::table('orders')
+            ->select('total', 'bayar', 'invoice', 'updated_at')
+            ->where('invoice', '=', $invoice)
+            ->first();
+
+        $kembali = $order->bayar - $order->total;
+
+        return view('orderDB.orderThird', compact('list', 'order', 'kembali'));
     }
 
 

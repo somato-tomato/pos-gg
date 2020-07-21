@@ -31,19 +31,61 @@
             </div>
 
             <div class="row justify-content-center">
-                <div class="col-md-5">
+                <div class="col-md-8">
                     <div class="card">
                         <div class="card-header card-header-primary">
-                            <h4 class="card-title ">Barang Masuk</h4>
-                            <p class="card-category">Data Barang Masuk</p>
+                            <h4 class="card-title ">Daftar Pesanan</h4>
+{{--                            <p class="card-category">Data Barang Masuk</p>--}}
                         </div>
                         <div class="card-body">
+                            <table class="table table-hover">
+                                <thead>
+                                <tr>
+                                    <th>Barang</th>
+                                    <th>Harga</th>
+                                    <th>Qty</th>
+                                    <th>Action</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <!-- MENGGUNAKAN LOOPING VUEJS -->
+                                @forelse( $cart as $c )
+                                    <tr>
+                                        <td>{{ $c->namaBarang }}</td>
+                                        <td>{{ $c->hargaBarang }}</td>
+                                        <td>{{ $c->qty }}</td>
+                                        <td>
+                                            {{--                                            <!-- EVENT ONCLICK UNTUK MENGHAPUS CART -->--}}
+                                            {{--                                            <button--}}
+                                            {{--                                                @click.prevent="removeCart(index)"--}}
+                                            {{--                                                class="btn btn-danger btn-sm">--}}
+                                            {{--                                                <i class="fa fa-trash"></i>--}}
+                                            {{--                                            </button>--}}
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr class="text-center">
+                                        <td colspan="4">Silahkan Belanja</td>
+                                    </tr>
+                                @endforelse
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-header card-header-primary">
+                            <h4 class="card-title ">Pilih Barang</h4>
+                            <p class="card-category">Silahkan memesan!</p>
+                        </div>
+                        <div class="card-body text-center">
                             <form action="{{ route('noJS.cart') }}" method="post" enctype="multipart/form-data">
                                 @csrf
-                                <div class="form-group">
+                                <div hidden class="form-group">
                                     <input class="form-control" name="idOrder" value="{{ $inv->id }}">
                                 </div>
-                                <div class="form-group">
+                                <div hidden class="form-group">
                                     <input class="form-control" value="{{ $inv->invoice }}">
                                 </div>
                                 <div class="form-group">
@@ -61,108 +103,128 @@
                                 </div>
                                 <button class="btn btn-primary btn-sm" type="submit">MASUK</button>
                             </form>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-5">
-                    <div class="card">
-                        <div class="card-header card-header-primary">
-                            <h4 class="card-title ">Barang Masuk</h4>
-                            <p class="card-category">Data Barang Masuk</p>
-                        </div>
-                        <div class="card-body">
-                            <div v-if="barang.namaBarang">
-                                <table class="table table-stripped">
-                                    <tr>
-                                        <th>Kode</th>
-                                        <td>:</td>
-                                        <td>@{{ barang.kodeBarang }}</td>
-                                    </tr>
-                                    <tr>
-                                        <th width="3%">Produk</th>
-                                        <td width="2%">:</td>
-                                        <td>@{{ barang.namaBarang }}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Harga</th>
-                                        <td>:</td>
-                                        <td>@{{ barang.hargaJualSatuan | currency }}</td>
-                                    </tr>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row justify-content-center">
-                <div class="col-md-8">
-                    <form action="{{ route('noJS.order', $inv->id) }}" method="post" enctype="multipart/form-data">
-                        @csrf
-                        @method('PUT')
-                        <div class="card">
-                            <div class="card-header card-header-primary">
-                                <h4 class="card-title ">Barang Masuk</h4>
-                                <p class="card-category">Data Barang Masuk</p>
-                            </div>
-                            <div class="card-body">
-                                <table class="table table-hover">
-                                    <thead>
-                                    <tr>
-                                        <th>Barang</th>
-                                        <th>Harga</th>
-                                        <th>Qty</th>
-                                        <th>Action</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <!-- MENGGUNAKAN LOOPING VUEJS -->
-                                    @forelse( $cart as $c )
-                                        <tr>
-                                            <td>{{ $c->namaBarang }}</td>
-                                            <td>{{ $c->hargaBarang }}</td>
-                                            <td>{{ $c->qty }}</td>
-                                            <td>
-                                                {{--                                            <!-- EVENT ONCLICK UNTUK MENGHAPUS CART -->--}}
-                                                {{--                                            <button--}}
-                                                {{--                                                @click.prevent="removeCart(index)"--}}
-                                                {{--                                                class="btn btn-danger btn-sm">--}}
-                                                {{--                                                <i class="fa fa-trash"></i>--}}
-                                                {{--                                            </button>--}}
-                                            </td>
-                                        </tr>
-                                    @empty
-                                        <tr>
-                                            <td>Silahkan Belanja</td>
-                                        </tr>
-                                    @endforelse
-                                    @if ( $total === 0)
-                                        <tr>
-                                            <td></td>
-                                        </tr>
-                                    @else
-                                        <tr>
-                                            <td style="text-align: right" colspan="3">Total</td>
-                                            <td>{{ $total }}</td>
-                                        </tr>
-                                    @endif
-                                    </tbody>
-                                </table>
-                                <div class="row">
-                                    <div class="col-md-6">
-
-                                    </div>
-                                    <div class="col-md-4">
-                                        <input class="form-control" name="bayar" placeholder="BAYAR!">
-                                    </div>
-                                    <div class="col-md-2">
-                                        <button class="btn btn-primary btn-sm"> Bayar </button>
-                                    </div>
+                            <hr>
+                            @if ( $total === 0)
+                                <p style="font-size: 15px">TOTAL</p>
+                                <p style="font-size: 25px">-</p>
+                            @else
+                                <tr>
+                                    <p style="font-size: 15px">TOTAL</p>
+                                    <p style="font-size: 25px">{{ $total }}</p>
+                                </tr>
+                            @endif
+                            <form action="{{ route('noJS.order', $inv->id) }}" method="post" enctype="multipart/form-data">
+                                @csrf
+                                @method('PUT')
+                                <div class="form-group">
+                                    <input type="number" class="form-control" name="bayar" placeholder="BAYAR!">
                                 </div>
-                            </div>
+                                <div class="text-center">
+                                    <button class="btn btn-primary btn-sm"> Bayar </button>
+                                </div>
+                            </form>
                         </div>
-                    </form>
+                    </div>
                 </div>
+{{--                <div class="col-md-5">--}}
+{{--                    <div class="card">--}}
+{{--                        <div class="card-header card-header-primary">--}}
+{{--                            <h4 class="card-title ">Barang Masuk</h4>--}}
+{{--                            <p class="card-category">Data Barang Masuk</p>--}}
+{{--                        </div>--}}
+{{--                        <div class="card-body">--}}
+{{--                            <div v-if="barang.namaBarang">--}}
+{{--                                <table class="table table-stripped">--}}
+{{--                                    <tr>--}}
+{{--                                        <th>Kode</th>--}}
+{{--                                        <td>:</td>--}}
+{{--                                        <td>@{{ barang.kodeBarang }}</td>--}}
+{{--                                    </tr>--}}
+{{--                                    <tr>--}}
+{{--                                        <th width="3%">Produk</th>--}}
+{{--                                        <td width="2%">:</td>--}}
+{{--                                        <td>@{{ barang.namaBarang }}</td>--}}
+{{--                                    </tr>--}}
+{{--                                    <tr>--}}
+{{--                                        <th>Harga</th>--}}
+{{--                                        <td>:</td>--}}
+{{--                                        <td>@{{ barang.hargaJualSatuan | currency }}</td>--}}
+{{--                                    </tr>--}}
+{{--                                </table>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
             </div>
+{{--            <div class="row justify-content-center">--}}
+{{--                <div class="col-md-8">--}}
+{{--                    <form action="{{ route('noJS.order', $inv->id) }}" method="post" enctype="multipart/form-data">--}}
+{{--                        @csrf--}}
+{{--                        @method('PUT')--}}
+{{--                        <div class="card">--}}
+{{--                            <div class="card-header card-header-primary">--}}
+{{--                                <h4 class="card-title ">Barang Masuk</h4>--}}
+{{--                                <p class="card-category">Data Barang Masuk</p>--}}
+{{--                            </div>--}}
+{{--                            <div class="card-body">--}}
+{{--                                <table class="table table-hover">--}}
+{{--                                    <thead>--}}
+{{--                                    <tr>--}}
+{{--                                        <th>Barang</th>--}}
+{{--                                        <th>Harga</th>--}}
+{{--                                        <th>Qty</th>--}}
+{{--                                        <th>Action</th>--}}
+{{--                                    </tr>--}}
+{{--                                    </thead>--}}
+{{--                                    <tbody>--}}
+{{--                                    <!-- MENGGUNAKAN LOOPING VUEJS -->--}}
+{{--                                    @forelse( $cart as $c )--}}
+{{--                                        <tr>--}}
+{{--                                            <td>{{ $c->namaBarang }}</td>--}}
+{{--                                            <td>{{ $c->hargaBarang }}</td>--}}
+{{--                                            <td>{{ $c->qty }}</td>--}}
+{{--                                            <td>--}}
+{{--                                                --}}{{--                                            <!-- EVENT ONCLICK UNTUK MENGHAPUS CART -->--}}
+{{--                                                --}}{{--                                            <button--}}
+{{--                                                --}}{{--                                                @click.prevent="removeCart(index)"--}}
+{{--                                                --}}{{--                                                class="btn btn-danger btn-sm">--}}
+{{--                                                --}}{{--                                                <i class="fa fa-trash"></i>--}}
+{{--                                                --}}{{--                                            </button>--}}
+{{--                                            </td>--}}
+{{--                                        </tr>--}}
+{{--                                    @empty--}}
+{{--                                        <tr>--}}
+{{--                                            <td>Silahkan Belanja</td>--}}
+{{--                                        </tr>--}}
+{{--                                    @endforelse--}}
+{{--                                    @if ( $total === 0)--}}
+{{--                                        <tr>--}}
+{{--                                            <td></td>--}}
+{{--                                        </tr>--}}
+{{--                                    @else--}}
+{{--                                        <tr>--}}
+{{--                                            <td style="text-align: right" colspan="3">Total</td>--}}
+{{--                                            <td>{{ $total }}</td>--}}
+{{--                                        </tr>--}}
+{{--                                    @endif--}}
+{{--                                    </tbody>--}}
+{{--                                </table>--}}
+{{--                                <div class="row">--}}
+{{--                                    <div class="col-md-6">--}}
+
+{{--                                    </div>--}}
+{{--                                    <div class="col-md-4">--}}
+{{--                                        <input class="form-control" name="bayar" placeholder="BAYAR!">--}}
+{{--                                    </div>--}}
+{{--                                    <div class="col-md-2">--}}
+{{--                                        <button class="btn btn-primary btn-sm"> Bayar </button>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                    </form>--}}
+{{--                </div>--}}
+{{--            </div>--}}
         </div>
     </div>
     <script src="{{ asset('material/js/core/jquery.min.js') }}"></script>
