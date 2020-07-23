@@ -17,7 +17,7 @@ class OrderDbController extends Controller
 
     public function createInvoice()
     {
-        $invoice = OrderCart::selectRaw('LPAD(CONVERT(COUNT("id") + 1, char(5)) , 5,"0") as invoice')->first();
+        $invoice = Order::selectRaw('LPAD(CONVERT(COUNT("id") + 1, char(5)) , 5,"0") as invoice')->first();
         $code_invoice = date('Ym').'-INV-'.$invoice->invoice;
 
         Order::create([
@@ -72,9 +72,15 @@ class OrderDbController extends Controller
             'hargaBarang' => $request->qty * $harga->hargaJualSatuan
         );
 
-        if (DB::table('order_carts')->where('idOrder', $request->idOrder)->exists())
+        $exist = DB::table('order_carts')->where('idOrder', $request->idOrder)->exists();
+        $existBarang = DB::table('order_carts')->where([['idOrder', $request->idOrder], ['idBarang', $request->barang_id]])->exists();
+        $stock = DB::table('barangs')->select('stock')->where('id', $request->barang_id)->first();
+
+//        ddd($request->qty > $stock->stock);
+
+        if ( $exist )
         {
-            if (DB::table('order_carts')->where([['idOrder', $request->idOrder], ['idBarang', $request->barang_id]])->exists())
+            if ( $existBarang && $request->qty <= $stock->stock )
             {
                 OrderCart::where([['idOrder', '=', $request->idOrder], ['idBarang', '=', $request->barang_id]])
                     ->increment('qty', $request->qty);
@@ -82,19 +88,28 @@ class OrderDbController extends Controller
                     ->select('qty')
                     ->where([['idOrder', $request->idOrder], ['idBarang', $request->barang_id]])
                     ->first();
-                ddd($hargaAwal);
                 $hargaBaru = $hargaAwal->qty * $harga->hargaJualSatuan;
                 OrderCart::where([['idOrder', '=', $request->idOrder], ['idBarang', '=', $request->barang_id]])
                     ->update(['hargaBarang' => $hargaBaru]);
+                Barang::where('id', $request->barang_id)->decrement('stock', $request->qty);
 
-                return back()->with('message', 'Quantity di Tambahkan');
-            }else {
-                OrderCart::create($form_data);
-                return back()->with('message', 'DI JERO IF KADUA');
+                return back()->with('message', 'Quantity di MASUK');
+            } else if ( $existBarang && $request->qty > $stock->stock )
+            {
+                return back()->with('message', 'STOCK TIDAK MENCUKUPI');
             }
-        }else {
+        } else if ( $request->qty <= $stock->stock )
+        {
             OrderCart::create($form_data);
-            return back()->with('message', 'Barang di pesan');
+
+            DB::table('barangs')
+                ->where('id', $request->barang_id)
+                ->decrement('stock', $request->qty);
+
+            return back()->with('message', '$request->qty < $stock');
+        } else if ( $request->qty > $stock->stock )
+        {
+            return back()->with('message', 'STOCK TIDAK MENCUKUPI');
         }
     }
 
@@ -149,6 +164,4 @@ class OrderDbController extends Controller
 
         return view('orderDB.orderThird', compact('list', 'order', 'kembali'));
     }
-
-
 }
