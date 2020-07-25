@@ -56,11 +56,11 @@
                                         <td>{{ $c->qty }}</td>
                                         <td>
                                             {{--                                            <!-- EVENT ONCLICK UNTUK MENGHAPUS CART -->--}}
-                                            {{--                                            <button--}}
-                                            {{--                                                @click.prevent="removeCart(index)"--}}
-                                            {{--                                                class="btn btn-danger btn-sm">--}}
-                                            {{--                                                <i class="fa fa-trash"></i>--}}
-                                            {{--                                            </button>--}}
+{{--                                            <button--}}
+{{--                                                @click.prevent="removeCart(index)"--}}
+{{--                                                class="btn btn-danger btn-sm">--}}
+{{--                                                <i class="fa fa-trash"></i>--}}
+{{--                                            </button>--}}
                                         </td>
                                     </tr>
                                 @empty

@@ -7,6 +7,7 @@ use App\Order;
 use App\OrderCart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use charlieuki\ReceiptPrinter\ReceiptPrinter as ReceiptPrinter;
 
 class OrderDbController extends Controller
 {
@@ -162,6 +163,51 @@ class OrderDbController extends Controller
 
         $kembali = $order->bayar - $order->total;
 
+        // Set params
+        $mid = '123123456';
+        $store_name = 'YOURMART';
+        $store_address = 'Mart Address';
+        $store_phone = '1234567890';
+        $store_email = 'yourmart@email.com';
+        $store_website = 'yourmart.com';
+        $tax_percentage = 10;
+        $transaction_id = 'TX123ABC456';
+
+        $printer = new ReceiptPrinter;
+        $printer->init(
+            config('receiptprinter.connector_type'),
+            config('receiptprinter.connector_descriptor')
+        );
+
+        $printer->setStore($mid, $store_name, $store_address, $store_phone, $store_email, $store_website);
+
+        foreach ($list as $l) {
+            $printer->addItem(
+                $l['namaBarang'],
+                $l['hargaJualSatuan'],
+                $l['qty']
+            );
+        }
+        $printer->setTax($tax_percentage);
+
+        $printer->calculateSubTotal();
+        $printer->calculateGrandTotal();
+
+        $printer->setTransactionID($transaction_id);
+
+        $printer->setQRcode([
+            'tid' => $transaction_id,
+        ]);
+
+        $printer->printReceipt();
+
         return view('orderDB.orderThird', compact('list', 'order', 'kembali'));
+
+        //TODO receiptprinter.php CHECK TO CONFIGURE THE PRINTER
     }
+
+//    public function printStruk($invoice)
+//    {
+//
+//    }
 }
