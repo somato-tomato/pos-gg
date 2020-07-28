@@ -71,6 +71,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::put('supplier/{id}/aktif', 'SupplierController@statActivated')->name('supp.active');
     Route::get('supplier/get-supplier', 'SupplierController@getSupplier')->name('supp.getSupp');
     Route::resource('supplier', 'SupplierController');
+    // ROUTE ROKO
+    Route::resource('toko', 'TokoController');
 });
 
 Route::group(['middleware' => 'auth'], function () {

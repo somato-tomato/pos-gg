@@ -11,60 +11,75 @@
   </div>
   <div class="sidebar-wrapper">
     <ul class="nav">
-      <li class="nav-item{{ $activePage == 'dashboard' ? ' active' : '' }}">
-        <a class="nav-link" href="{{ route('home') }}">
-          <i class="material-icons">dashboard</i>
-            <p>{{ __('Dashboard') }}</p>
-        </a>
-      </li>
-      <li class="nav-item{{ $activePage == 'supplier' ? ' active' : '' }}">
-        <a class="nav-link" href="{{ route('supplier.index') }}">
-          <i class="material-icons">content_paste</i>
-            <p>{{ __('Supplier') }}</p>
-        </a>
-      </li>
-        <li class="nav-item{{ $activePage == 'barang' ? ' active' : '' }}">
-            <a class="nav-link" href="{{ route('barang.index') }}">
-                <i class="material-icons">content_paste</i>
-                <p>{{ __('Barang') }}</p>
-            </a>
-        </li>
-        <li class="nav-item{{ $activePage == 'kategori' ? ' active' : '' }}">
-            <a class="nav-link" href="{{ route('kategori.dex') }}">
-                <i class="material-icons">content_paste</i>
-                <p>{{ __('Kategori') }}</p>
-            </a>
-        </li>
-        <li class="nav-item{{ $activePage == 'rak' ? ' active' : '' }}">
-            <a class="nav-link" href="{{ route('rak.dex') }}">
-                <i class="material-icons">content_paste</i>
-                <p>{{ __('Rak Barang') }}</p>
-            </a>
-        </li>
-        <li class="nav-item{{ $activePage == 'barangSup' ? ' active' : '' }}">
-            <a class="nav-link" href="{{ route('bSupplier.index') }}">
-                <i class="material-icons">content_paste</i>
-                <p>{{ __('Supplier - Barang') }}</p>
-            </a>
-        </li>
-        <li class="nav-item{{ $activePage == 'minStock' ? ' active' : '' }}">
-            <a class="nav-link" href="{{ route('stock.warn') }}">
-                <i class="material-icons">content_paste</i>
-                <p>{{ __('Stock Kurang') }}</p>
-            </a>
-        </li>
-        <li class="nav-item{{ $activePage == 'order' ? ' active' : '' }}">
-            <a class="nav-link" href="{{ route('trans.dex') }}">
-                <i class="material-icons">content_paste</i>
-                <p>{{ __('Transaksi') }}</p>
-            </a>
-        </li>
-        <li class="nav-item{{ $activePage == 'nojs' ? ' active' : '' }}">
-            <a class="nav-link" href="{{ route('noJS.first') }}">
-                <i class="material-icons">content_paste</i>
-                <p>{{ __('Transaksi NO JS') }}</p>
-            </a>
-        </li>
+      @if($navToko === null)
+            <li class="nav-item{{ $activePage == 'toko' ? ' active' : '' }}">
+                <a class="nav-link" href="{{ route('toko.index') }}">
+                    <i class="material-icons">content_paste</i>
+                    <p>{{ __('Toko') }}</p>
+                </a>
+            </li>
+      @else
+            <li class="nav-item{{ $activePage == 'dashboard' ? ' active' : '' }}">
+                <a class="nav-link" href="{{ route('home') }}">
+                    <i class="material-icons">dashboard</i>
+                    <p>{{ __('Dashboard') }}</p>
+                </a>
+            </li>
+            <li class="nav-item{{ $activePage == 'toko' ? ' active' : '' }}">
+                <a class="nav-link" href="{{ route('toko.index') }}">
+                    <i class="material-icons">content_paste</i>
+                    <p>{{ __('Toko') }}</p>
+                </a>
+            </li>
+            <li class="nav-item{{ $activePage == 'supplier' ? ' active' : '' }}">
+                <a class="nav-link" href="{{ route('supplier.index') }}">
+                    <i class="material-icons">content_paste</i>
+                    <p>{{ __('Supplier') }}</p>
+                </a>
+            </li>
+            <li class="nav-item{{ $activePage == 'barang' ? ' active' : '' }}">
+                <a class="nav-link" href="{{ route('barang.index') }}">
+                    <i class="material-icons">content_paste</i>
+                    <p>{{ __('Barang') }}</p>
+                </a>
+            </li>
+            <li class="nav-item{{ $activePage == 'kategori' ? ' active' : '' }}">
+                <a class="nav-link" href="{{ route('kategori.dex') }}">
+                    <i class="material-icons">content_paste</i>
+                    <p>{{ __('Kategori') }}</p>
+                </a>
+            </li>
+            <li class="nav-item{{ $activePage == 'rak' ? ' active' : '' }}">
+                <a class="nav-link" href="{{ route('rak.dex') }}">
+                    <i class="material-icons">content_paste</i>
+                    <p>{{ __('Rak Barang') }}</p>
+                </a>
+            </li>
+            <li class="nav-item{{ $activePage == 'barangSup' ? ' active' : '' }}">
+                <a class="nav-link" href="{{ route('bSupplier.index') }}">
+                    <i class="material-icons">content_paste</i>
+                    <p>{{ __('Supplier - Barang') }}</p>
+                </a>
+            </li>
+            <li class="nav-item{{ $activePage == 'minStock' ? ' active' : '' }}">
+                <a class="nav-link" href="{{ route('stock.warn') }}">
+                    <i class="material-icons">content_paste</i>
+                    <p>{{ __('Stock Kurang') }}</p>
+                </a>
+            </li>
+            <li class="nav-item{{ $activePage == 'order' ? ' active' : '' }}">
+                <a class="nav-link" href="{{ route('trans.dex') }}">
+                    <i class="material-icons">content_paste</i>
+                    <p>{{ __('Transaksi') }}</p>
+                </a>
+            </li>
+            <li class="nav-item{{ $activePage == 'nojs' ? ' active' : '' }}">
+                <a class="nav-link" href="{{ route('noJS.first') }}">
+                    <i class="material-icons">content_paste</i>
+                    <p>{{ __('Transaksi NO JS') }}</p>
+                </a>
+            </li>
+      @endif
     </ul>
   </div>
 </div>

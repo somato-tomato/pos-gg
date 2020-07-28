@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Toko;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use phpDocumentor\Reflection\Types\True_;
 
 class TokoController extends Controller
 {
@@ -13,7 +16,11 @@ class TokoController extends Controller
      */
     public function index()
     {
-        //
+        $toko = DB::table('tokos')
+            ->select('id', 'namaToko', 'alamatToko', 'nomorToko', 'emailToko', 'websiteToko')
+            ->first();
+
+        return view('toko.tokoDex', compact('toko'));
     }
 
     /**
@@ -23,7 +30,7 @@ class TokoController extends Controller
      */
     public function create()
     {
-        //
+        return view('toko.tokoCre');
     }
 
     /**
@@ -34,7 +41,23 @@ class TokoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'namaToko' => 'required',
+            'alamatToko' => 'required',
+            'nomorToko' => 'required'
+        ]);
+
+        $form_data = array(
+            'namaToko' => $request->namaToko,
+            'alamatToko' => $request->alamatToko,
+            'nomorToko' => $request->nomorToko,
+            'emailToko' => $request->emailToko,
+            'websiteToko' => $request->websiteToko
+        );
+
+        Toko::create($form_data);
+
+        return redirect()->route('toko.index')->with('message', 'Halo, Selamat telah melakukan konfigurasi untuk Toko '. $request->namaToko);
     }
 
     /**
@@ -45,7 +68,7 @@ class TokoController extends Controller
      */
     public function show($id)
     {
-        //
+        return view('toko.tokoView');
     }
 
     /**
@@ -56,7 +79,11 @@ class TokoController extends Controller
      */
     public function edit($id)
     {
-        //
+        $toko = DB::table('tokos')
+            ->where('id', '=', $id)
+            ->first();
+
+        return view('toko.tokoUp', compact('toko'));
     }
 
     /**
@@ -68,7 +95,23 @@ class TokoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'namaToko' => 'required',
+            'alamatToko' => 'required',
+            'nomorToko' => 'required'
+        ]);
+
+        $form_data = array(
+            'namaToko' => $request->namaToko,
+            'alamatToko' => $request->alamatToko,
+            'nomorToko' => $request->nomorToko,
+            'emailToko' => $request->emailToko,
+            'websiteToko' => $request->websiteToko
+        );
+
+        Toko::where('id', $id)->update($form_data);
+
+        return redirect()->route('toko.index')->with('message', 'Informasi Toko '.$request->namaToko.' berhasil di perbarui!');
     }
 
     /**

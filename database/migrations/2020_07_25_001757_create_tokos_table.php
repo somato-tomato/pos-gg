@@ -15,6 +15,11 @@ class CreateTokosTable extends Migration
     {
         Schema::create('tokos', function (Blueprint $table) {
             $table->id();
+            $table->string('namaToko');
+            $table->string('alamatToko');
+            $table->string('nomorToko');
+            $table->string('emailToko')->nullable();
+            $table->string('websiteToko')->nullable();
             $table->timestamps();
         });
     }
