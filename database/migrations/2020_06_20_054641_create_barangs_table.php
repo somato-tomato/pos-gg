@@ -15,7 +15,7 @@ class CreateBarangsTable extends Migration
     {
         Schema::create('barangs', function (Blueprint $table) {
             $table->id();
-            $table->string('idKategori');
+            $table->string('idKategori')->nullable();
             $table->string('kodeBarang');
             $table->string('namaBarang');
             $table->string('satuan');

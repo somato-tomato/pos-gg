@@ -18,7 +18,7 @@ class CreateOrderDetailsTable extends Migration
             $table->bigInteger('idOrder');
             $table->bigInteger('idBarang');
             $table->integer('qty');
-            $table->integer('harga');
+            $table->integer('hargaJualSatuan');
             $table->timestamps();
         });
     }
