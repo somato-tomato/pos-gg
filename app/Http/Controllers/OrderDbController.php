@@ -149,6 +149,9 @@ class OrderDbController extends Controller
 
     public function kwitansi($invoice)
     {
+        $toko = DB::table('tokos')
+            ->first();
+
         $list = DB::table('order_carts')
             ->join('orders', 'order_carts.idOrder', '=', 'orders.id')
             ->join('barangs', 'order_carts.idBarang', '=', 'barangs.id')
@@ -163,15 +166,15 @@ class OrderDbController extends Controller
 
         $kembali = $order->bayar - $order->total;
 
-        // Set params
+
         $mid = '123123456';
-        $store_name = 'YOURMART';
-        $store_address = 'Mart Address';
-        $store_phone = '1234567890';
-        $store_email = 'yourmart@email.com';
-        $store_website = 'yourmart.com';
+        $store_name = $toko->namaToko;
+        $store_address = $toko->alamatToko;
+        $store_phone = $toko->nomorToko;
+        $store_email = $toko->emailToko;
+        $store_website = $toko->websiteToko;
         $tax_percentage = 10;
-        $transaction_id = 'TX123ABC456';
+        $transaction_id = $order->invoice;
 
         $printer = new ReceiptPrinter;
         $printer->init(
