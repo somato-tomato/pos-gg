@@ -17659,13 +17659,7 @@ new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
       qty: ''
     },
     shoppingCart: [],
-    computed: {
-      total: function total() {
-        return this.cart.reduce(function (total, item, n) {
-          return Number(total) + Number(item.shoppingCart.hargaJualSatuan) * item.shoppingCart.qty[n];
-        }, 0);
-      }
-    },
+    total: [],
     submitCart: false,
     submitForm: false,
     errorMessage: '',
@@ -17690,6 +17684,7 @@ new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
       _this.cart.qty = $('#qty').val();
     });
     this.getCart();
+    this.getTotal();
   },
   methods: {
     getBarang: function getBarang() {
@@ -17727,43 +17722,16 @@ new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
         _this4.shoppingCart = response.data;
       });
     },
-    removeCart: function removeCart(id) {
+    getTotal: function getTotal() {
       var _this5 = this;
 
-      this.$swal({
-        title: 'Kamu Yakin?',
-        text: 'Kamu Tidak Dapat Mengembalikan Tindakan Ini!',
-        type: 'warning',
-        showCancelButton: true,
-        confirmButtonText: 'Iya, Lanjutkan!',
-        cancelButtonText: 'Tidak, Batalkan!',
-        showCloseButton: true,
-        showLoaderOnConfirm: true,
-        preConfirm: function preConfirm() {
-          return new Promise(function (resolve) {
-            setTimeout(function () {
-              resolve();
-            }, 2000);
-          });
-        },
-        allowOutsideClick: function allowOutsideClick() {
-          return !_this5.$swal.isLoading();
-        }
-      }).then(function (result) {
-        if (result.value) {
-          axios__WEBPACK_IMPORTED_MODULE_1___default.a["delete"]("/api/cart/".concat(id)).then(function (response) {
-            _this5.getCart();
-          })["catch"](function (error) {
-            console.log(error);
-          });
-        }
+      axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/api/total').then(function (response) {
+        _this5.total = response.data;
       });
     },
-    sendOrder: function sendOrder() {
+    removeCart: function removeCart(id) {
       var _this6 = this;
 
-      this.errorMessage = '';
-      this.message = '';
       this.$swal({
         title: 'Kamu Yakin?',
         text: 'Kamu Tidak Dapat Mengembalikan Tindakan Ini!',
@@ -17785,13 +17753,47 @@ new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
         }
       }).then(function (result) {
         if (result.value) {
-          _this6.submitForm = true;
+          axios__WEBPACK_IMPORTED_MODULE_1___default.a["delete"]("/api/cart/".concat(id)).then(function (response) {
+            _this6.getCart();
+          })["catch"](function (error) {
+            console.log(error);
+          });
+        }
+      });
+    },
+    sendOrder: function sendOrder() {
+      var _this7 = this;
+
+      this.errorMessage = '';
+      this.message = '';
+      this.$swal({
+        title: 'Kamu Yakin?',
+        text: 'Kamu Tidak Dapat Mengembalikan Tindakan Ini!',
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Iya, Lanjutkan!',
+        cancelButtonText: 'Tidak, Batalkan!',
+        showCloseButton: true,
+        showLoaderOnConfirm: true,
+        preConfirm: function preConfirm() {
+          return new Promise(function (resolve) {
+            setTimeout(function () {
+              resolve();
+            }, 2000);
+          });
+        },
+        allowOutsideClick: function allowOutsideClick() {
+          return !_this7.$swal.isLoading();
+        }
+      }).then(function (result) {
+        if (result.value) {
+          _this7.submitForm = true;
           axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/transaksi/checkout').then(function (response) {
             setTimeout(function () {
-              _this6.getCart();
+              _this7.getCart();
 
-              _this6.message = response.data.message;
-              _this6.submitForm = false;
+              _this7.message = response.data.message;
+              _this7.submitForm = false;
             }, 1000);
           })["catch"](function (error) {
             console.log(error);

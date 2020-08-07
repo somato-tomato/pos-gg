@@ -110,7 +110,7 @@
                                 <!-- MENGGUNAKAN LOOPING VUEJS -->
                                 <tr v-for="(row, index) in shoppingCart">
                                     <td>@{{ row.namaBarang }} (@{{ row.kodeBarang }})</td>
-                                    <td>@{{ row.hargaJualSatuan | currency }}</td>
+                                    <td>@{{ row.jumlah | currency }}</td>
                                     <td>@{{ row.qty }}</td>
                                     <td>
                                         <!-- EVENT ONCLICK UNTUK MENGHAPUS CART -->
@@ -120,6 +120,9 @@
                                             <i class="fa fa-trash"></i>
                                         </button>
                                     </td>
+                                </tr>
+                                <tr>
+                                    <td>@{{ total.total }}</td>
                                 </tr>
                                 </tbody>
                             </table>

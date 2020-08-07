@@ -21,4 +21,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::get('/barang/{id}', 'OrderController@getBarang');
 Route::post('/cart', 'OrderController@addToCart');
 Route::get('/cart', 'OrderController@getCart');
+Route::get('/total', 'OrderController@getTotal');
 Route::delete('/cart/{id}', 'OrderController@removeCart');

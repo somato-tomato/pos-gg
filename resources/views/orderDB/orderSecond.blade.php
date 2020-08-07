@@ -101,6 +101,10 @@
                                     <label for="qty">Qty</label>
                                     <input type="number" name="qty" id="qty" min="1" class="form-control">
                                 </div>
+                                <div class="form-group">
+                                    <label for="hargaTambah">Harga</label>
+                                    <input type="number" name="hargaTambah" id="hargaTambah" class="form-control">
+                                </div>
                                 <button class="btn btn-primary btn-sm" type="submit">MASUK</button>
                             </form>
                             <hr>

@@ -47,6 +47,7 @@ class OrderController extends Controller
             'qty' => $request->qty,
             'jumlah' => $barang->hargaJualSatuan * $request->qty
         ];
+
         return response()->json($getCart, 200)
             ->cookie('cart', json_encode($getCart), 120);
     }
@@ -57,9 +58,21 @@ class OrderController extends Controller
         return response()->json($cart, 200);
     }
 
-    public function getTotal()
+    public function getTotal(Request $request)
     {
-
+        $cart = json_decode($request->cookie('cart'), true);
+        $result = collect($cart)->map(function($value) {
+            return [
+                'kodeBarang' => $value['kodeBarang'],
+                'namaBarang' => $value['namaBarang'],
+                'qty' => $value['qty'],
+                'hargaJualSatuan' => $value['hargaJualSatuan'],
+                'result' => $value['hargaJualSatuan'] * $value['qty']
+            ];
+        })->all();
+        $total = array_sum(array_column($result, 'result'));
+        $json = ['total' => $total];
+        return response()->json($json, 200);
     }
 
     public function removeCart($id)

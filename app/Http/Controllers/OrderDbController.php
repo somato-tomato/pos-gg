@@ -45,6 +45,8 @@ class OrderDbController extends Controller
             ->where('idOrder', '=', $inv->id)
             ->sum('hargaBarang');
 
+        //TODO : Harga bisa dirubah.
+
         return view('orderDB.orderSecond', compact('inv', 'barang', 'cart', 'total'));
     }
 
@@ -186,9 +188,9 @@ class OrderDbController extends Controller
 
         foreach ($list as $l) {
             $printer->addItem(
-                $l['namaBarang'],
-                $l['hargaJualSatuan'],
-                $l['qty']
+                $l->namaBarang,
+                $l->hargaJualSatuan,
+                $l->qty
             );
         }
         $printer->setTax($tax_percentage);

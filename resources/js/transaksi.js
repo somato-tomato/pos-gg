@@ -20,13 +20,7 @@ new Vue({
             qty: ''
         },
         shoppingCart: [],
-        computed: {
-            total() {
-                return this.cart.reduce((total, item, n) => {
-                    return Number(total) + (Number(item.shoppingCart.hargaJualSatuan) * item.shoppingCart.qty[n]);
-                }, 0);
-            }
-        },
+        total: [],
         submitCart: false,
         submitForm: false,
         errorMessage: '',
@@ -48,7 +42,8 @@ new Vue({
         $('#qty').on('keyup', () => {
             this.cart.qty = $('#qty').val();
         })
-        this.getCart()
+        this.getCart();
+        this.getTotal()
     },
     methods: {
         getBarang() {
@@ -82,6 +77,12 @@ new Vue({
             axios.get('/api/cart')
                 .then((response) => {
                     this.shoppingCart = response.data
+                })
+        },
+        getTotal() {
+            axios.get('/api/total')
+                .then((response) => {
+                    this.total = response.data
                 })
         },
         removeCart(id) {
