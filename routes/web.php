@@ -1,6 +1,8 @@
 <?php
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,6 +24,35 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');
+
+Route::get('/test', function (){
+    return view('test');
+});
+
+Route::post('/test/post', function (Request $request){
+
+    $existBarang = DB::table('test_rule')
+        ->where([['id_barang', $request->id_barang], ['jumlah', $request->jumlah]])
+        ->exists();
+
+    if ($existBarang)
+    {
+        $test = DB::table('test_rule')
+            ->select('harga')
+            ->first();
+
+        echo $test->harga;
+    } else {
+        $test = DB::table('test_rule')
+            ->select('harga')
+            ->where([['jumlah', 1], ['id_barang', $request->id_barang]])
+            ->first();
+
+        $total = $test->harga * $request->jumlah;
+
+        echo $total;
+    }
+})->name('test');
 
 Route::group(['middleware' => 'auth'], function () {
     //ROUTE ORDER / TRANSAKSI NO JS
