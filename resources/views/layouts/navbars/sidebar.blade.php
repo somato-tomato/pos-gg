@@ -35,7 +35,7 @@
                 <div class="collapse show" id="tokoMenu">
                     <ul class="nav">
                         <li class="nav-item{{ $activePage == 'toko' ? ' active' : '' }}">
-                            <a class="nav-link" ref="{{ route('toko.index') }}">
+                            <a class="nav-link" href="{{ route('toko.index') }}">
                                 <span class="sidebar-mini"> T </span>
                                 <span class="sidebar-normal">{{ __('Toko') }} </span>
                             </a>
@@ -68,18 +68,6 @@
                             <a class="nav-link" href="{{ route('barang.index') }}">
                                 <span class="sidebar-mini"> B </span>
                                 <span class="sidebar-normal">{{ __('Barang / Produk') }} </span>
-                            </a>
-                        </li>
-                        <li class="nav-item{{ $activePage == 'kategori' ? ' active' : '' }}">
-                            <a class="nav-link" href="{{ route('kategori.dex') }}">
-                                <span class="sidebar-mini"> K </span>
-                                <span class="sidebar-normal">{{ __('Kategori Barang') }} </span>
-                            </a>
-                        </li>
-                        <li class="nav-item{{ $activePage == 'rak' ? ' active' : '' }}">
-                            <a class="nav-link" href="{{ route('rak.dex') }}">
-                                <span class="sidebar-mini"> R </span>
-                                <span class="sidebar-normal">{{ __('Rak / Lokasi') }} </span>
                             </a>
                         </li>
                     </ul>

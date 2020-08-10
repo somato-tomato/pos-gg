@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class BarangRuleController extends Controller
 {
-    public function add(Request $request)
+    public function addRule(Request $request)
     {
         $request->validate([
             'idBarang' => 'required',
@@ -23,6 +23,6 @@ class BarangRuleController extends Controller
 
         BarangRule::create($form_data);
 
-        return back()->route('');
+        return back();
     }
 }

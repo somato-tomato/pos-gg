@@ -14,6 +14,7 @@ class Barang extends Model
         'hargaJualSatuan',
         'stock',
         'minStock',
-        'jmlPerdus'
+        'jmlPerdus',
+        'photo'
     ];
 }

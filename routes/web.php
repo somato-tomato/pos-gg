@@ -89,6 +89,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('barang/kategori/store', 'KategoriRakController@kategoriStore')->name('kategori.store');
     Route::get('barang/kategori/get-kategori', 'KategoriRakController@getKategori')->name('kategori.getKategori');
     Route::get('barang/kategori', 'KategoriRakController@kategoriDex')->name('kategori.dex');
+    //ROUTE BARANG RULE
+    Route::post('barang/{id}/rule', 'BarangRuleController@addRule')->name('rule.add');
     //ROUTE BARANG
     Route::put('barang/{id}/update', 'BarangController@update')->name('barang.update');
     Route::get('barang/{id}/edit', 'BarangController@edit')->name('barang.edit');
