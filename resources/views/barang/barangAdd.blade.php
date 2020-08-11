@@ -5,7 +5,7 @@
         <div class="container-fluid">
             <div class="row justify-content-center">
                 <div class="col-md-10">
-                    <form method="post" action="{{ route('barang.save') }}" autocomplete="off" class="form-horizontal">
+                    <form method="post" action="{{ route('barang.save') }}" autocomplete="off" class="form-horizontal" enctype="multipart/form-data">
                         @csrf
                         <div class="row">
                             <div class="col-md-8">
@@ -55,14 +55,14 @@
                                             <div class="form-group {{ $errors->has('jmlPerdus') ? ' has-danger' : '' }} col-md-2">
                                                 <label for="jmlPerdus" class="bmd-label-static">Jumlah Perdus</label>
                                                 <input type="number" class="form-control {{ $errors->has('jmlPerdus') ? ' is-invalid' : '' }}" id="jmlPerdus" name="jmlPerdus">
-                                                <small id="KSHelp" class="fo    rm-text text-muted">Jmlh per Satu Dus</small>
+{{--                                                <small id="KSHelp" class="fo    rm-text text-muted">Jmlh per Satu Dus</small>--}}
                                             </div>
 
 
                                             <div class="form-group {{ $errors->has('satuan') ? ' has-danger' : '' }} col-md-2">
                                                 <label for="satuan" class="bmd-label-static">Satuan</label>
                                                 <input type="text" class="form-control {{ $errors->has('satuan') ? ' is-invalid' : '' }}" id="satuan" name="satuan">
-                                                <small id="KSHelp" class="form-text text-muted">Cth : PCS, BJ, BUAH</small>
+{{--                                                <small id="KSHelp" class="form-text text-muted">Cth : PCS, BJ, BUAH</small>--}}
                                             </div>
                                         </div>
 
@@ -76,7 +76,7 @@
                             <div class="col-md-4">
                                 <div class="avatar-upload">
                                     <div class="avatar-edit">
-                                        <input type='file' id="imageUpload" accept=".png, .jpg, .jpeg" />
+                                        <input type="file" name="photo" id="imageUpload" accept=".png, .jpg, .jpeg" />
                                         <label for="imageUpload"></label>
                                     </div>
                                     <div class="avatar-preview">

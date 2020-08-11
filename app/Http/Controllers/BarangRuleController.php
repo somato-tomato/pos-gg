@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\BarangRule;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class BarangRuleController extends Controller
 {
@@ -12,17 +13,45 @@ class BarangRuleController extends Controller
         $request->validate([
             'idBarang' => 'required',
             'jumlahBeli' => 'required',
-            'harga' => 'required'
+            'discount' => 'required'
         ]);
 
         $form_data = array(
             'idBarang' => $request->idBarang,
-            'jumlahBeli' => $request->jumlagBeli,
-            'harga' => $request->harga
+            'jumlahBeli' => $request->jumlahBeli,
+            'discount' => $request->discount
         );
 
         BarangRule::create($form_data);
 
-        return back();
+        return back()->with('message', 'Discount berhasil ditambah!');
+    }
+
+    public function upStatusDown($id)
+    {
+        $disc = DB::table('barang_rules')
+                    ->select('discount')
+                    ->where('id', '=', $id)
+                    ->first();
+
+        DB::table('barang_rules')
+            ->where('id', '=', $id)
+            ->update(['status' => 1]);
+
+        return back()->with('messageError', 'Discount '.$disc->discount.'% di nonAktifkan!');
+    }
+
+    public function upStatusUp($id)
+    {
+        $disc = DB::table('barang_rules')
+            ->select('discount')
+            ->where('id', '=', $id)
+            ->first();
+
+        DB::table('barang_rules')
+            ->where('id', '=', $id)
+            ->update(['status' => 0]);
+
+        return back()->with('messageError', 'Discount '.$disc->discount.'% di Aktifkan!');
     }
 }

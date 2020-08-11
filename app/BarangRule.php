@@ -7,6 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class BarangRule extends Model
 {
     protected $fillable = [
-        'idBarang', 'jumlahBeli', 'harga'
+        'idBarang', 'jumlahBeli', 'discount'
     ];
 }

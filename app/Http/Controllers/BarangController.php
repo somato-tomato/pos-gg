@@ -6,6 +6,7 @@ use App\Barang;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\DataTables;
+use Illuminate\Support\Facades\File;
 
 class BarangController extends Controller
 {
@@ -58,6 +59,8 @@ class BarangController extends Controller
             'photo' => $new_name
         );
 
+        ddd($form_data);
+
         Barang::create($form_data);
 
         return redirect()->route('barang.index')->with('message', 'Barang berhasil di Tambahkan');
@@ -72,7 +75,18 @@ class BarangController extends Controller
             ->where('barangs.id', '=', $id)
             ->first();
 
-        return view('barang.barangView', compact('data','kategori'));
+        $rak = DB::table('raks')
+            ->join('barang_raks', 'raks.id', '=', 'barang_raks.idRak')
+            ->join('barangs', 'barang_raks.idBarang', '=', 'barangs.id')
+            ->where('barangs.id', '=', $id)
+            ->select('raks.namaRak')->first();
+
+        $discount = DB::table('barang_rules')
+            ->select('id', 'jumlahBeli', 'discount', 'status')
+            ->where('idBarang', '=', $id)
+            ->get();
+
+        return view('barang.barangView', compact('data','kategori', 'discount', 'rak'));
     }
 
     public function edit($id)

@@ -87,9 +87,13 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('barang/rak', 'KategoriRakController@rakDex')->name('rak.dex');
     //ROUTE KATEGORI
     Route::post('barang/kategori/store', 'KategoriRakController@kategoriStore')->name('kategori.store');
+    Route::get('barang/kategori/list-kategori', 'KategoriRakController@getListKategori')->name('kategori.getList');
     Route::get('barang/kategori/get-kategori', 'KategoriRakController@getKategori')->name('kategori.getKategori');
     Route::get('barang/kategori', 'KategoriRakController@kategoriDex')->name('kategori.dex');
     //ROUTE BARANG RULE
+    Route::put('barang/rule/{id}/aktif', 'BarangRuleController@upStatusUp')->name('rule.aktif');
+    Route::put('barang/rule/{id}/non-aktif', 'BarangRuleController@upStatusDown')->name('rule.nonAktif');
+    Route::post('barang/save-kategori-rak', 'KategoriRakController@saveKategoriRak')->name('rule.addKategorak');
     Route::post('barang/{id}/rule', 'BarangRuleController@addRule')->name('rule.add');
     //ROUTE BARANG
     Route::put('barang/{id}/update', 'BarangController@update')->name('barang.update');

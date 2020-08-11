@@ -29,6 +29,18 @@ class KategoriRakController extends Controller
         return Datatables::of($data)->make(true);
     }
 
+    public function getListKategori(Request $request)
+    {
+        if ($request->has('q')) {
+            $namaKategori = $request->q;
+            $data = DB::table('kategoris')
+                ->select('id', 'namaKategori')
+                ->where('namakategori', 'LIKE', "%$namaKategori%")
+                ->get();
+            return response()->json($data);
+        }
+    }
+
     public function kategoriStore(Request $request)
     {
         $request->validate([
@@ -105,6 +117,48 @@ class KategoriRakController extends Controller
         BarangRak::create($form_data);
 
         return back()->with('message', 'Barang berhasil ditambahkan ke Rak Barang!');
+    }
+
+    public function saveKategoriRak(Request $request)
+    {
+        $form_data = array(
+            'idBarang' => $request->idBarang,
+            'idKategori' => $request->idKategori,
+            'idRak' => $request->idRak
+        );
+
+        if ($form_data['idKategori'] == null && $form_data['idRak'] == null)
+        {
+            return back()->with('messageError', 'Tidak ada yang berubah!');
+        } else if ($form_data['idKategori'] == true && $form_data['idRak'] == null)
+        {
+            DB::table('barangs')
+                ->where('id', '=' , $request->idBarang)
+                ->update(['idKategori' => $request->idKategori]);
+
+            return back()->with('message', 'Kategori berhasil dirubah');
+        } else if ($form_data['idKategori'] == null && $form_data['idRak'] == true)
+        {
+            DB::table('barang_raks')
+                ->updateOrInsert(
+                    ['idBarang' => $request->idBarang],
+                    ['idRak' => $request->idRak]
+                );
+
+            return back()->with('message', 'Lokasi Rak berhasil dirubah');
+        } else {
+            DB::table('barangs')
+                ->where('id', '=' , $request->idBarang)
+                ->update(['idKategori' => $request->idKategori]);
+
+            DB::table('barang_raks')
+                ->updateOrInsert(
+                    ['idBarang' => $request->idBarang],
+                    ['idRak' => $request->idRak]
+                );
+
+            return back()->with('message', 'Kategori dan Lokasi Rak berhasil dirubah');
+        }
     }
 
 }

@@ -1,13 +1,13 @@
 .avatar-upload {
   position: relative;
-  max-width: 205px;
-  margin: 50px auto;
+  max-width: 150px;
+  margin: 25px auto;
 }
 .avatar-upload .avatar-edit {
   position: absolute;
-  right: 12px;
-  z-index: 1;
-  top: 10px;
+  /*right: 12px;*/
+  /*z-index: 1;*/
+  /*top: 25px;*/
 }
 .avatar-upload .avatar-edit input {
   display: none;
