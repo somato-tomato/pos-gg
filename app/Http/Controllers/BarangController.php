@@ -28,16 +28,12 @@ class BarangController extends Controller
 
     public function create()
     {
-        $kategori = DB::table('kategoris')->pluck('namaKategori', 'id');
-        $kategori->prepend('Pilih Kategori Barang','1');
-
-        return view('barang.barangAdd', compact('kategori'));
+        return view('barang.barangAdd');
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'idKategori' => 'required',
             'kodeBarang' => 'required|unique:barangs',
             'namaBarang' =>  'required',
             'satuan' =>  'required',
@@ -47,15 +43,19 @@ class BarangController extends Controller
             'jmlPerdus' => 'required'
         ]);
 
+        $file = $request->file('photo');
+        $new_name = 'brg'.$file->getClientOriginalName();
+        $file->move(public_path('files_brg'), $new_name);
+
         $form_data = array(
-            'idKategori' => $request->idKategori,
             'kodeBarang' =>  $request->kodeBarang,
             'namaBarang'     =>  $request->namaBarang,
             'satuan' => $request->satuan,
             'hargaJualSatuan' => $request->hargaJualSatuan,
             'stock' => $request->stock,
             'minStock' => $request->minStock,
-            'jmlPerdus' => $request->jmlPerdus
+            'jmlPerdus' => $request->jmlPerdus,
+            'photo' => $new_name
         );
 
         Barang::create($form_data);
