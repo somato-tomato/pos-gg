@@ -40,16 +40,10 @@
                                 <span class="sidebar-normal">{{ __('Toko') }} </span>
                             </a>
                         </li>
-                        <li class="nav-item{{ $activePage == 'kategori' ? ' active' : '' }}">
-                            <a class="nav-link" href="{{ route('kategori.dex') }}">
+                        <li class="nav-item{{ $activePage == 'kategorak' ? ' active' : '' }}">
+                            <a class="nav-link" href="{{ route('kategorak.dex') }}">
                                 <span class="sidebar-mini"> K </span>
-                                <span class="sidebar-normal">{{ __('Kategori Barang') }} </span>
-                            </a>
-                        </li>
-                        <li class="nav-item{{ $activePage == 'rak' ? ' active' : '' }}">
-                            <a class="nav-link" href="{{ route('rak.dex') }}">
-                                <span class="sidebar-mini"> R </span>
-                                <span class="sidebar-normal">{{ __('Rak / Lokasi') }} </span>
+                                <span class="sidebar-normal">{{ __('Kategori - Lokasi Rak') }} </span>
                             </a>
                         </li>
                     </ul>

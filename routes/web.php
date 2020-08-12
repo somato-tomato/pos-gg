@@ -79,18 +79,20 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('barang/get-stock-kurang', 'BarangStockController@getStockWarn')->name('stock.getStockWarn');
     Route::get('barang/stock-kurang', 'BarangStockController@stockWarn')->name('stock.warn');
     Route::post('barang/tambah', 'BarangStockController@stockAdd')->name('stock.nambah');
+
+    //ROUTE KATEGORAK
+    Route::get('kategori-rak', 'KategoriRakController@kategorakDex')->name('kategorak.dex');
+
     //ROUTE RAK
     Route::post('barang/rak/list-rak/store', 'KategoriRakController@rakBarangStore')->name('rak.storeRakBarang');
     Route::get('barang/rak/list-rak', 'KategoriRakController@getListRak')->name('rak.getList');
     Route::post('barang/rak/store', 'KategoriRakController@rakStore')->name('rak.store');
-    Route::get('barang/rak/get-rak', 'KategoriRakController@getRak')->name('rak.getRak');
-    Route::get('barang/rak', 'KategoriRakController@rakDex')->name('rak.dex');
     //ROUTE KATEGORI
     Route::post('barang/kategori/store', 'KategoriRakController@kategoriStore')->name('kategori.store');
     Route::get('barang/kategori/list-kategori', 'KategoriRakController@getListKategori')->name('kategori.getList');
-    Route::get('barang/kategori/get-kategori', 'KategoriRakController@getKategori')->name('kategori.getKategori');
-    Route::get('barang/kategori', 'KategoriRakController@kategoriDex')->name('kategori.dex');
+
     //ROUTE BARANG RULE
+    Route::delete('barang/rule/{id}/delete', 'BarangRuleController@deleteDisc')->name('rule.delete');
     Route::put('barang/rule/{id}/aktif', 'BarangRuleController@upStatusUp')->name('rule.aktif');
     Route::put('barang/rule/{id}/non-aktif', 'BarangRuleController@upStatusDown')->name('rule.nonAktif');
     Route::post('barang/save-kategori-rak', 'KategoriRakController@saveKategoriRak')->name('rule.addKategorak');

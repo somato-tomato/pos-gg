@@ -54,4 +54,11 @@ class BarangRuleController extends Controller
 
         return back()->with('messageError', 'Discount '.$disc->discount.'% di Aktifkan!');
     }
+
+    public function deleteDisc($id)
+    {
+        DB::table('barang_rules')->where('id', '=', $id)->delete();
+
+        return back()->with('message', 'Discount berhasil dihapus!');
+    }
 }

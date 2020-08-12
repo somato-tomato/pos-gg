@@ -11,22 +11,23 @@ use Yajra\DataTables\DataTables;
 
 class KategoriRakController extends Controller
 {
-    public function kategoriDex()
+
+    public function kategorakDex()
     {
         $kategori = DB::table('kategoris')
-            ->select('namaKategori')
+            ->leftJoin('barangs', 'kategoris.id', '=', 'barangs.idKategori')
+            ->select('kategoris.namaKategori', DB::raw('count(barangs.idKategori) as hitungKategori'))
+            ->groupBy(DB::Raw('IFNULL( kategoris.namaKategori , 0 )'))
             ->get();
 
-        return view('barang.kategori.kategoriDex', compact('kategori'));
-    }
+        $rak = DB::table('raks')
+            ->leftJoin('barang_raks', 'raks.id', '=', 'barang_raks.idRak')
+            ->leftJoin('barangs', 'barang_raks.idBarang', '=', 'barangs.id')
+            ->select('raks.namaRak', DB::raw('count(barang_raks.idBarang) as hitungBarang'))
+            ->groupBy(DB::Raw('IFNULL( raks.namaRak , 0 )'))
+            ->get();
 
-    public function getKategori()
-    {
-        $data = DB::table('kategoris')
-            ->join('barangs', 'kategoris.id', '=', 'barangs.idKategori')
-            ->select('barangs.kodeBarang', 'barangs.namaBarang', 'kategoris.namaKategori');
-
-        return Datatables::of($data)->make(true);
+        return view('barang.kategorak.kategorakDex', compact('kategori', 'rak'));
     }
 
     public function getListKategori(Request $request)
@@ -54,25 +55,6 @@ class KategoriRakController extends Controller
         Kategori::create($form_data);
 
         return back()->with('message', 'Kategori berhasil ditambahkan!');
-    }
-
-    public function rakDex()
-    {
-        $rak = DB::table('raks')
-            ->select('namaRak')
-            ->get();
-
-        return view('barang.rak.rakDex', compact('rak'));
-    }
-
-    public function getRak()
-    {
-        $data = DB::table('raks')
-            ->join('barang_raks', 'raks.id', '=', 'barang_raks.idRak')
-            ->join('barangs', 'barang_raks.idBarang', '=', 'barangs.id')
-            ->select('barangs.kodeBarang', 'barangs.namaBarang', 'raks.namaRak');
-
-        return Datatables::of($data)->make(true);
     }
 
     public function getListRak(Request $request)

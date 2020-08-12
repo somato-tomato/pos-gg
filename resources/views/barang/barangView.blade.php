@@ -307,9 +307,13 @@
                                                                                 </button>
                                                                             </form>
                                                                         @endif
-                                                                        <button type="button" rel="tooltip" class="btn btn-warning">
-                                                                            <i class="material-icons">remove</i>
-                                                                        </button>
+                                                                        <form action="{{ route('rule.delete', $d->id) }}" method="post">
+                                                                            @csrf
+                                                                            @method('DELETE')
+                                                                            <button onclick='return confirm("Hapus Discount ?")' type="submit" rel="tooltip" class="btn btn-warning">
+                                                                                <i class="material-icons">remove</i>
+                                                                            </button>
+                                                                        </form>
                                                                     </td>
                                                                 </tr>
                                                             @empty
