@@ -38,7 +38,6 @@
                             <p class="card-category">Data Supplier Barang</p>
                         </div>
                         <div class="card-body">
-                            <a href="{{ route('bSupplier.create') }}" class="btn btn-primary btn-sm" type="button">Tambah Supplier Barang</a>
                             <div class="table-responsive">
                                 <table class="table" id="bSupplierTable">
                                     <thead class=" text-primary">

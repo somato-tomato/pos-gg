@@ -86,7 +86,12 @@ class BarangController extends Controller
             ->where('idBarang', '=', $id)
             ->get();
 
-        return view('barang.barangView', compact('data','kategori', 'discount', 'rak'));
+        $supplier = DB::table('barang_suppliers')
+            ->join('barangs', 'barang_suppliers.idBarang', '=', 'barangs.id')
+            ->join('suppliers', 'barang_suppliers.idSupplier', '=', 'suppliers.id')
+            ->where('barangs.id', '=', $id)
+            ->select('barang_suppliers.id', 'suppliers.namaSupplier', 'barang_suppliers.hargaBeli')->get();
+        return view('barang.barangView', compact('data','kategori', 'discount', 'rak', 'supplier'));
     }
 
     public function edit($id)

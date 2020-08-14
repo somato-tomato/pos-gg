@@ -84,7 +84,7 @@
                         </li>
                         <li class="nav-item{{ $activePage == 'barangSup' ? ' active' : '' }}">
                             <a class="nav-link" href="{{ route('bSupplier.index') }}">
-                                <i class="material-icons">BS</i>
+                                <i class="material-icons"> S </i>
                                 <p>{{ __('Barang Supplier') }}</p>
                             </a>
                         </li>
@@ -115,7 +115,6 @@
                     </ul>
                 </div>
             </li>
-
             <li class="nav-item{{ $activePage == 'order' ? ' active' : '' }}">
                 <a class="nav-link" href="{{ route('trans.dex') }}">
                     <i class="material-icons">content_paste</i>

@@ -71,7 +71,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('barang-supplier/list-supplier', 'BarangSupplierController@loadSupplier')->name('bSupplier.loadSupplier');
     Route::post('barang-supplier/update', 'BarangSupplierController@update')->name('bSupplier.update');
     Route::post('barang-supplier/save', 'BarangSupplierController@store')->name('bSupplier.store');
-    Route::get('barang-supplier/create', 'BarangSupplierController@create')->name('bSupplier.create');
     Route::get('barang-supplier/get-barang-supplier', 'BarangSupplierController@getBarangSupplier')->name('bSupplier.getbSupplier');
     Route::get('barang-supplier/', 'BarangSupplierController@index')->name('bSupplier.index');
     //ROUTE STOCK BARANG MASUK

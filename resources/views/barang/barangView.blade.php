@@ -43,6 +43,9 @@
                                         <li class="nav-item">
                                             <a class="nav-link" href="#disc" data-toggle="tab"><i>Discount </i> - Kategori - Rak</a>
                                         </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="#supplier" data-toggle="tab">Supplier</a>
+                                        </li>
                                     </ul>
                                 </div>
                             </div>
@@ -329,6 +332,76 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="tab-pane" id="supplier">
+                                    <div class="row  justify-content-center">
+                                        <div class="col-md-10">
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <div class="card">
+                                                        <div class="card-body">
+                                                            <form action="{{ route('bSupplier.store') }}" method="post">
+                                                                @csrf
+
+                                                                <div hidden class="form-group {{ $errors->has('idBarang') ? ' has-danger' : '' }}">
+                                                                    <label for="idBarang" class="bmd-label-floating">Harga Beli Barang</label>
+                                                                    <input type="text" class="form-control {{ $errors->has('idBarang') ? ' is-invalid' : '' }}" id="idBarang" name="idBarang" value="{{ $data->id }}">
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label for="id_label_single"> Nama Supplier
+                                                                        <select id="namaSupplier" class="form-control namaSupplier" name="idSupplier"></select>
+                                                                    </label>
+                                                                </div>
+                                                                <div class="form-group {{ $errors->has('hargaBeli') ? ' has-danger' : '' }}">
+                                                                    <label for="hargaBeli" class="bmd-label-floating">Harga Beli Barang</label>
+                                                                    <input type="number" class="form-control {{ $errors->has('hargaBeli') ? ' is-invalid' : '' }}" id="hargaBeli" name="hargaBeli">
+                                                                </div>
+                                                                <div class="text-center">
+                                                                    <button type="submit" class="btn btn-primary">{{ __('Tambah') }}</button>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <div class="card">
+                                                        <div class="card-body">
+                                                            <table class="table">
+                                                                <thead>
+                                                                <tr>
+                                                                    <th>Supplier</th>
+                                                                    <th>Harga dari Supplier</th>
+                                                                    <th>Aksi</th>
+                                                                </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                @forelse($supplier as $s)
+                                                                    <tr>
+                                                                        <td>{{ $s->namaSupplier }}</td>
+                                                                        <td>{{ $s->hargaBeli }}</td>
+                                                                        <td class="td-actions text-right">
+                                                                            <form action="{{ route('rule.delete', $d->id) }}" method="post">
+                                                                                @csrf
+                                                                                @method('DELETE')
+                                                                                <button onclick='return confirm("Hapus Discount ?")' type="submit" rel="tooltip" class="btn btn-warning">
+                                                                                    <i class="material-icons">remove</i>
+                                                                                </button>
+                                                                            </form>
+                                                                        </td>
+                                                                    </tr>
+                                                                @empty
+                                                                    <tr>
+                                                                        Belum ada Diskon
+                                                                    </tr>
+                                                                @endforelse
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -373,6 +446,26 @@
                         results:  $.map(data, function (item) {
                             return {
                                 text: item.namaKategori,
+                                id: item.id
+                            }
+                        })
+                    };
+                },
+                cache: true
+            }
+        });
+        $('.namaSupplier').select2({
+            placeholder: 'Masukan Nama Supplier',
+            theme: 'material',
+            ajax: {
+                url: '{{ route('bSupplier.loadSupplier') }}',
+                dataType: 'json',
+                delay: 250,
+                processResults: function (data) {
+                    return {
+                        results:  $.map(data, function (item) {
+                            return {
+                                text: item.namaSupplier,
                                 id: item.id
                             }
                         })

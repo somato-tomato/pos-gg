@@ -61,11 +61,6 @@ class BarangSupplierController extends Controller
             ->rawColumns(['perbarui'])->make(true);
     }
 
-    public function create()
-    {
-        return view('barang.supplier.bSupplierAdd');
-    }
-
     public  function store(Request $request)
     {
         $request->validate([
@@ -80,11 +75,9 @@ class BarangSupplierController extends Controller
             'hargaBeli'   =>  $request->hargaBeli
         );
 
-//        ddd($form_data);
-
         BarangSupplier::create($form_data);
 
-        return redirect()->route('bSupplier.index')->with('message', 'Supplier Barang berhasil ditambahkan!');
+        return back()->with('message', 'Supplier Barang berhasil ditambahkan!');
     }
 
     public function update(Request $request)
