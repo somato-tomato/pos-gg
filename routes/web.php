@@ -111,6 +111,15 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('supplier', 'SupplierController');
     // ROUTE ROKO
     Route::resource('toko', 'TokoController');
+    Route::post('transaksii/addproduct/{id}', 'transaksiController@addProductCart');
+    Route::post('transaksii/clear', 'transaksiController@clear');
+    Route::post('/transaksii/removeproduct/{id}', 'transaksiController@removeProductCart');
+    Route::post('/transaksii/increasecart/{id}', 'transaksiController@increasecart');
+    Route::post('/transaksii/increasecart1/{id}', 'transaksiController@increasecart1');
+    Route::post('/transaksii/decreasecart/{id}', 'transaksiController@decreasecart');
+    Route::post('/transaksii/bayar','transaksiController@bayar');
+    Route::get('/transaksii/history','transaksiController@history');
+    Route::get('/transaksii/laporan/{id}','transaksiController@laporan');
 });
 
 Route::group(['middleware' => 'auth'], function () {
