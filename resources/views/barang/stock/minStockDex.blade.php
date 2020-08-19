@@ -59,6 +59,14 @@
 {{--                                                    </label>--}}
 {{--                                                </div>--}}
 
+                                                <div class="file-inputs">
+                                                    <form class="form">
+                                                        <div class="file-upload-wrapper" data-text="Select your file!">
+                                                            <input name="file-upload-field" type="file" class="file-upload-field" value="">
+                                                        </div>
+                                                    </form>
+                                                </div>
+
                                                 <div class="form-row">
                                                     <div class="form-group col-md-6">
                                                         <label for="namaBarang">Nama Barang</label>
@@ -163,6 +171,9 @@
                     $('select[name="idSupplier"]').empty();
                 }
             });
+        });
+        $("form").on("change", ".file-upload-field", function(){
+            $(this).parent(".file-upload-wrapper").attr("data-text",         $(this).val().replace(/.*(\/|\\)/, '') );
         });
     </script>
 @endsection
