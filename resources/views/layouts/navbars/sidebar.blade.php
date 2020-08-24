@@ -101,7 +101,7 @@
                 <div class="collapse show" id="stockMenu">
                     <ul class="nav">
                         <li class="nav-item{{ $activePage == 'stock' ? ' active' : '' }}">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="{{ route('stock.view') }}">
                                 <i class="material-icons"> S </i>
                                 <p>{{ __('Tambah Stock') }}</p>
                             </a>

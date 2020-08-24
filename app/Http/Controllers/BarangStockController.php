@@ -17,11 +17,16 @@ class BarangStockController extends Controller
             'stockMasuk' =>  'required'
         ]);
 
+        $file = $request->file('photo');
+        $new_name = 'brg'.$file->getClientOriginalName();
+        $file->move(public_path('files_brgStock'), $new_name);
+
         $form_data = array(
             'idBarang'     =>  $request->idBarang,
             'idSupplier' => $request->idSupplier,
             'stockMasuk'   =>  $request->stockMasuk,
-            'keterangan'   =>  $request->keterangan
+            'keterangan'   =>  $request->keterangan,
+            'photo' => $request->new_name
         );
 
         DB::table('barangs')
@@ -62,6 +67,25 @@ class BarangStockController extends Controller
         $supplier->prepend('Pilih Supplier', '0');
 
         return json_encode($supplier);
+    }
+
+    public function stockView()
+    {
+        $kurang = DB::table('barangs')
+            ->pluck('namaBarang', 'id');
+
+        $kurang->prepend('Pilih Barang', '0');
+
+        return view('barang.stock.listStockDex', compact('kurang'));
+    }
+
+    public function getStock()
+    {
+        $data = DB::table('barangs')
+            ->select('id', 'kodeBarang', 'namaBarang', 'stock')
+            ->get();
+
+        return DataTables::of($data)->make(true);
     }
 
 }

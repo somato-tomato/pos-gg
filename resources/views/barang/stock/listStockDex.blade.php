@@ -53,11 +53,11 @@
                                                 </button>
                                             </div>
                                             <div class="modal-body">
-{{--                                                <div class="form-group">--}}
-{{--                                                    <label for="id_label_single"> Nama Barang--}}
-{{--                                                        <select id="namaBarang" class="form-control namaBarang" name="idBarang"></select>--}}
-{{--                                                    </label>--}}
-{{--                                                </div>--}}
+                                                {{--                                                <div class="form-group">--}}
+                                                {{--                                                    <label for="id_label_single"> Nama Barang--}}
+                                                {{--                                                        <select id="namaBarang" class="form-control namaBarang" name="idBarang"></select>--}}
+                                                {{--                                                    </label>--}}
+                                                {{--                                                </div>--}}
 
                                                 <div class="form-row">
                                                     <div class="form-group col-md-6">
@@ -118,9 +118,6 @@
                                         <th>
                                             Stock
                                         </th>
-                                        <th>
-                                            Minimal Stok
-                                        </th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -143,12 +140,11 @@
             $('#stockWarnTable').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: '{{ route('stock.getStockWarn') }}',
+                ajax: '{{ route('stock.get') }}',
                 columns: [
                     { data: 'kodeBarang', name: 'kodeBarang' },
                     { data: 'namaBarang', name: 'namaBarang' },
                     { data: 'stock', name: 'stock' },
-                    { data: 'minStock', name: 'minStock' }
                 ]
             });
         });

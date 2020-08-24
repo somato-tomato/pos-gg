@@ -59,8 +59,6 @@ class BarangController extends Controller
             'photo' => $new_name
         );
 
-        ddd($form_data);
-
         Barang::create($form_data);
 
         return redirect()->route('barang.index')->with('message', 'Barang berhasil di Tambahkan');

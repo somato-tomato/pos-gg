@@ -78,6 +78,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('barang/get-stock-kurang', 'BarangStockController@getStockWarn')->name('stock.getStockWarn');
     Route::get('barang/stock-kurang', 'BarangStockController@stockWarn')->name('stock.warn');
     Route::post('barang/tambah', 'BarangStockController@stockAdd')->name('stock.nambah');
+    Route::get('barang/get-stock', 'BarangStockController@getStock')->name('stock.get');
+    Route::get('barang/stock', 'BarangStockController@stockView')->name('stock.view');
 
     //ROUTE KATEGORAK
     Route::get('kategori-rak', 'KategoriRakController@kategorakDex')->name('kategorak.dex');
