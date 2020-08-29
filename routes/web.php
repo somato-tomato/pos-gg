@@ -113,6 +113,12 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('supplier', 'SupplierController');
     // ROUTE ROKO
     Route::resource('toko', 'TokoController');
+
+
+
+
+    // ROUTE TRANSAKSI JS
+    Route::get('transaksii', 'transaksiController@index');
     Route::post('transaksii/addproduct/{id}', 'transaksiController@addProductCart');
     Route::post('transaksii/clear', 'transaksiController@clear');
     Route::post('/transaksii/removeproduct/{id}', 'transaksiController@removeProductCart');
@@ -122,6 +128,12 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/transaksii/bayar','transaksiController@bayar');
     Route::get('/transaksii/history','transaksiController@history');
     Route::get('/transaksii/laporan/{id}','transaksiController@laporan');
+
+
+    Route::get('livewire', 'LivewireController@livewireCart');
+
+
+
 });
 
 Route::group(['middleware' => 'auth'], function () {
