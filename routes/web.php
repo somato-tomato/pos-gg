@@ -129,11 +129,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/transaksii/history','transaksiController@history');
     Route::get('/transaksii/laporan/{id}','transaksiController@laporan');
 
-
-    Route::get('livewire', 'LivewireController@livewireCart');
-
-
-
+    //RUTE LIVEWIRE
+    Route::get('/livewire', 'livewireCart')->name('livetrans.dex');
 });
 
 Route::group(['middleware' => 'auth'], function () {
