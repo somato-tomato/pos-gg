@@ -119,7 +119,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     // ROUTE TRANSAKSI JS
     Route::get('transaksii', 'transaksiController@index');
-    Route::post('transaksii/addproduct/{id}', 'transaksiController@addProductCart');
+    Route::post('transaksii/addproduct/{id}', 'transaksiController@addProductCart')->name('tr.add');
     Route::post('transaksii/clear', 'transaksiController@clear');
     Route::post('/transaksii/removeproduct/{id}', 'transaksiController@removeProductCart');
     Route::post('/transaksii/increasecart/{id}', 'transaksiController@increasecart');
@@ -130,7 +130,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/transaksii/laporan/{id}','transaksiController@laporan');
 
     //RUTE LIVEWIRE
-    Route::get('/livewire', 'livewireCart')->name('livetrans.dex');
 });
 
 Route::group(['middleware' => 'auth'], function () {

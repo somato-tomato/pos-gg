@@ -211,11 +211,6 @@ class OrderDbController extends Controller
         //TODO receiptprinter.php CHECK TO CONFIGURE THE PRINTER
     }
 
-    public function livewireCart()
-    {
-        return view('livewire.livewireCart');
-    }
-
 //    public function printStruk($invoice)
 //    {
 //
